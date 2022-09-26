@@ -1,0 +1,18 @@
+{{#*inline "page"}}
+
+<section id="hello">
+    <h1>{{ user }}!</h1>
+    <h2>{{{ description }}}</h2>
+    <h3>Here are your repos:</h3>
+    <ul>
+    {{#each repos}}
+        <div>  
+            <a href="/{{this.name}}">{{ this.name }}</a>
+            <p>{{ this.description }}</p>
+        </div>
+    {{/each}}
+    </ul>
+</section>
+
+{{/inline}}
+{{> layout}}
