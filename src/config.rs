@@ -1,6 +1,6 @@
 use lazy_static::lazy_static;
 use serde_derive::{Serialize, Deserialize};
-use std::fs;
+use std::{fs, path::PathBuf};
 
 lazy_static! {
     pub static ref CONFIG: Config = {
@@ -14,7 +14,8 @@ lazy_static! {
         else {
             let config_struct = Config {
                 name: "Example User".to_string(),
-                description: "This is billy and he loves his [website](https://example.com)!!!".to_string()
+                description: "This is billy and he loves his [website](https://example.com)!!!".to_string(),
+                git_location: dirs::home_dir().unwrap_or(PathBuf::from("/")),
             };
             config.pop();
             let _ = fs::create_dir_all(config.clone());
@@ -29,4 +30,5 @@ lazy_static! {
 pub struct Config {
     pub name: String,
     pub description: String,
+    pub git_location: PathBuf,
 }

@@ -1,18 +1,53 @@
 {{#*inline "page"}}
 
-<section id="hello">
-    <h1>{{ user }}!</h1>
-    <h2>{{{ description }}}</h2>
-    <h3>Here are your repos:</h3>
-    <ul>
-    {{#each repos}}
-        <div>  
-            <a href="/{{this.name}}">{{ this.name }}</a>
-            <p>{{ this.description }}</p>
-        </div>
-    {{/each}}
-    </ul>
-</section>
+<div class="container" style="margin-top:56px">
+    <div class="row">
+      <div class="col-md-4">
+          <h2>{{ user }}!</h2>
+          {{{ description }}}
+      </div>
+      <div class="col-md-8">
+          <form>
+              <input class="form-control" dir="auto" name="search" placeholder="Search" type="text" value="{{ search }}">
+          </form>
+          <div class="event-list">
+          {{#each repos}}
+              <div class="event">
+                <h4> 
+                  <a href="/{{this.name}}">{{ this.name }}</a>
+                  </h4>
+                  <p>{{ this.description }}</p>
+              </div>
+          {{/each}}
+          </div>
+          {{#if (ne total_page 1)}}
+          <div class="row">
+            <div class="col-4">
+            {{#if (ne page 1)}}
+            <a class="btn btn-default" href="?page={{page_dec}}&search={{search}}">
+            <span aria-hidden="true" class="icon icon-caret-left"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path></svg>
+            </span>
+                  prev
+                </a>
+            {{/if}}
+            </div>
+            <div class="col-4 text-centered">
+              {{page}} / {{ total_page }}
+              </div>
+            {{#if (ne page total_page)}}
+            <div class="col-4 text-right">
+            <a class="btn btn-default" href="?page={{page_inc}}&search={{search}}">
+                  next
+                  <span aria-hidden="true" class="icon icon-caret-right"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+            </span>
+            </a>
+            </div>
+            {{/if}}
+            </div>
+            {{/if}}
+      </div>
+    </div>
+</div>
 
 {{/inline}}
 {{> layout}}
