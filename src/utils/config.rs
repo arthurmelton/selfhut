@@ -19,6 +19,7 @@ lazy_static! {
                 description: "This is billy and he loves his [website](https://example.com)!!!"
                     .to_string(),
                 git_location: dirs::home_dir().unwrap_or(PathBuf::from("/")),
+                domain: "127.0.0.1".to_string()
             };
             config.pop();
             let _ = fs::create_dir_all(config.clone());
@@ -38,4 +39,5 @@ pub struct Config {
     pub name: String,
     pub description: String,
     pub git_location: PathBuf,
+    pub domain: String,
 }

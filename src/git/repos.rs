@@ -1,6 +1,7 @@
 use crate::config::CONFIG;
 use serde_derive::Serialize;
 use std::fs;
+use crate::utils::repo_config::repo_config;
 
 pub fn get_repos() -> Option<Vec<Repo>> {
     let home = CONFIG.git_location.clone();
@@ -19,18 +20,10 @@ pub fn get_repos() -> Option<Vec<Repo>> {
             .filter(|path| !path.starts_with("."))
             .filter(|path| path.ends_with(".git"))
             .map(|path| {
-                let mut description_path = home.clone();
-                description_path.push(path.clone());
-                description_path.push("DESCRIPTION");
-                let description = match fs::read(description_path.clone()) {
-                    Ok(content) => String::from_utf8_lossy(&content)
-                        .parse()
-                        .unwrap_or("".to_string()),
-                    Err(_) => "".to_string(),
-                };
+                let name = path[0..path.len() - 4].to_string();
                 Repo {
-                    name: path[0..path.len() - 4].to_string(),
-                    description,
+                    name: name.clone(),
+                    description: repo_config(name).description.unwrap_or("".to_string()),
                 }
             })
             .collect::<Vec<Repo>>(),

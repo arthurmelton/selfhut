@@ -1,0 +1,85 @@
+{{#*inline "page"}}
+{{> navbar}}
+{{#if config.description}}
+<div class="header-extension">
+  <div class="container">{{config.description}}</div>
+</div>
+{{/if}}
+<div class="container">
+  <div class="row" style="margin-bottom: 1rem">
+    {{#if preview}}
+    <div class="col-md-6">
+      <div class="event-list" style="margin-bottom: 0.5rem"> 
+        {{#each preview}} 
+        <div class="event">
+          <div>
+            <a href="/{{../repo}}/commit/{{this.commit_hash}}" title="{{this.commit_hash}}">{{this.commit_hash_short}}</a>
+            — {{this.commitie}}
+            <small class="pull-right">
+            <a href="/{{../repo}}/log?from={{this.commit_hash}}#log-{{this.commit_hash}}" id="log-{{this.commit_hash}}"><span title="{{this.time_utc}}">{{this.time_relitive}}</span></a>
+            </small>
+          </div>
+          <pre class="commit">{{this.commit}}</pre>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>refs</h3>
+          <dl>
+            <dt>{{main_branch}}</dt>
+            <dd>
+              <a href="/{{repo}}/tree">
+                browse&nbsp;
+                <span aria-hidden="true" class="icon icon-caret-right">
+                  <svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
+                  </svg>
+                </span>
+              </a>
+              <a href="/{{repo}}/log">
+                log&nbsp;
+                <span aria-hidden="true" class="icon icon-caret-right">
+                  <svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
+                  </svg>
+                </span>
+              </a>
+            </dd>
+            {{#if tag}}
+              <dt>ref</dt>
+              <dd>
+                <a href="/{{repo}}/refs/{{tag}}">
+                  release notes&nbsp;
+                  <span aria-hidden="true" class="icon icon-caret-right">
+                    <svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
+                    </svg>
+                  </span>
+                </a>
+              </dd>
+            {{/if}}
+          </dl>
+        </div>
+        <div class="col-md-8">
+          <h3>clone</h3>
+          <dl>
+            <dd><a href="https://{{domain}}/{{repo}}">https://{{domain}}/{{repo}}</a></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="row" style="margin-bottom: 1m">
+   </div>
+    <div class="row" id="readme">
+        <div class="col-md-10">
+          {{{readme}}}
+        </div>
+    </div>
+</div>
+{{/inline}}
+{{> layout}}

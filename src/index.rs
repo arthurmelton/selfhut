@@ -1,6 +1,7 @@
 use crate::config::CONFIG;
 use crate::git::repos::get_repos;
 use crate::git::repos::Repo;
+use crate::utils::markdown::md_to_html;
 
 use rocket_dyn_templates::{context, Template};
 
@@ -35,7 +36,7 @@ pub fn index(page: Option<usize>, search: Option<String>) -> Option<Template> {
         context! {
             title: "Me",
             user: CONFIG.name.clone(),
-            description: markdown::to_html(&CONFIG.description.clone()),
+            description: md_to_html(&CONFIG.description.clone()),
             repos: repos[(page-1)*PAGE_REPO_COUNT..last_item].to_vec(),
             search: search.unwrap_or("".to_string()),
             page,
