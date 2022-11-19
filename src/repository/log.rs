@@ -27,7 +27,8 @@ pub fn tree_main(repo: String) -> Option<Template> {
                 commits: get_commits(repo.clone(), 1, None),
                 branch: main_branch.clone(),
                 current_dir_file: "/",
-                current_dir: "/"
+                current_dir: "/",
+                payment: CONFIG.payment_link.clone()
             }
         ))
 }
@@ -46,6 +47,7 @@ pub fn tree(repo: String, branch: String, location: PathBufWithDotfiles) -> Opti
                 branch: branch.clone(),
                 current_dir_file: format!("/{}/", location.get().display()).replace("//", "/"),
                 current_dir: format!("/{}", location.get().display()),
+                payment: CONFIG.payment_link.clone()
             }
         ))
     }

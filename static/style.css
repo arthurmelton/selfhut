@@ -7144,6 +7144,10 @@ a.text-dark:focus,a.text-dark:hover {
     vertical-align: -.25em
 }
 
+.icon-donate {
+    color: rgb(204, 105, 157);
+}
+
 .navbar {
     flex-wrap: wrap
 }
