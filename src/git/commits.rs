@@ -34,16 +34,16 @@ pub fn get_commits(repo_name: String, ammount: usize, after: Option<String>) -> 
                         },
                         time_relitive: HumanTime::from(time).to_string(),
                     });
+                    i+=1;
             },
             Err(_) => {}
         }
-        i+=1;
         commit = revwalk.next();
     }
     Some(commits)
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 pub struct Commits {
     commit: String,
     commit_hash: String,

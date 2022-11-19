@@ -17,7 +17,7 @@ pub fn repository(repo: String) -> Option<Template> {
         Err(_) => "".to_string()
     };
     Some(Template::render(
-            "repository",
+            "repository/summary",
             context! {
                 title: repo.clone(),
                 repo: repo.clone(),

@@ -1,5 +1,11 @@
 <div class="header-tabbed" style="margin-top:56px">
-  <div class="container">
+  <div class="
+{{#if (eq fluid "true")}}
+  container-fluid
+{{else}}
+  container
+{{/if}}
+  ">
     <h2>
       <a href="/">~</a>/{{repo}}
     </h2>

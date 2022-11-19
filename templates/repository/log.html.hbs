@@ -1,0 +1,63 @@
+{{#*inline "page"}}
+{{> navbar}}
+<div class="header-extension">
+	<div class="container tree-header">
+		<div class="breadcrumb">
+      {{repo}}{{current_dir}}
+			<span class="text-muted" style="margin-left: 1rem">
+			<span title="40000">
+			d---------
+			</span>
+			</span>
+			<div class="blob-nav" style="margin-left: 1rem">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link active" href="/{{repo}}/tree/{{branch}}{{current_dir}}">Tree</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/{{repo}}/log/{{branch}}{{current_dir}}">Log</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+    {{#if commit}}
+      <div class="commit-info">
+        <a href="/{{repo}}/commit/{{branch}}">{{commit.commit_hash_short}}</a> —
+        {{commit.commitie}}
+        {{commit.commit}}
+        <span class="text-muted">
+        <span title="{{commit.time_utc}}">{{commit.time_relitive}}</span>
+        </span>
+      </div>
+    {{/if}}
+	</div>
+</div>
+<div class="container">
+	<div class="row" style="margin-bottom: 1rem">
+		<div class="col-md-12">
+			<div class="tree-list">
+			  {{#each files}}	
+        <div class="mode">
+            <span title="{{this.properties_int}}">
+            {{this.properties}}
+            </span>
+          </div>
+          <div class="name {{this.file_type}}">
+            <a href="/{{../repo}}/tree/{{../branch}}{{../current_dir_file}}{{this.name}}">
+            {{this.name}}
+            </a>
+          </div>
+          <div class="commit"></div>
+          <div class="date"></div>
+          <div class="size">
+            <span title="{{this.size}}">
+            {{this.size}}
+            </span>
+          </div>
+        {{/each}}
+			</div>
+		</div>
+	</div>
+</div>
+{{/inline}}
+{{> layout}}

@@ -9036,3 +9036,6 @@ dl dd {
     padding-right: 0
 }
 
+.highlight pre {
+    background-color: rgba(0,0,0,0) !important;
+}
