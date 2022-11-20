@@ -8,6 +8,7 @@ mod utils;
 
 use utils::config;
 
+use std::path::Path;
 use rocket::fs::relative;
 
 use crate::repository::raw;
@@ -23,6 +24,7 @@ fn rocket() -> _ {
             "/",
             routes![
                 file_server,
+                robots,
                 index::index,
                 summary::repository,
                 tree::tree_main,
@@ -36,6 +38,12 @@ fn rocket() -> _ {
 
 #[get("/static/<path..>")]
 async fn file_server(path: PathBufWithDotfiles) -> Option<rocket::fs::NamedFile> {
-    let path = std::path::Path::new(relative!("static")).join(path.get());
+    let path = Path::new(relative!("static")).join(path.get());
+    rocket::fs::NamedFile::open(path).await.ok()
+}
+
+#[get("/robots.txt")]
+async fn robots() -> Option<rocket::fs::NamedFile> {
+    let path = Path::new(relative!("static")).join(Path::new("robots.txt"));
     rocket::fs::NamedFile::open(path).await.ok()
 }
