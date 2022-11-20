@@ -22,3 +22,14 @@ you want to change the config (this would make sense because at default it only
 has a example user), edit the file in `$(XDG_CONFIG_HOME)/git-server/git-server.toml`
 to your liking.
 
+## Making a new git
+
+To make a new git repo you need to run 
+```sh
+git init --bare my-repo.git
+```
+After you do this you will need to cd into the directory and run
+```sh
+git update-server-info
+```
+This should create the git and make it so that people can actually clone it!
