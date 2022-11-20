@@ -1,7 +1,7 @@
 use rocket::fs::NamedFile;
 use crate::config::CONFIG;
 use crate::PathBufWithDotfiles;
-use std::path::Path;
+
 
 #[get("/<repo>/<path..>", rank=3)]
 pub async fn clone(repo: String, path: PathBufWithDotfiles) -> Option<NamedFile> {

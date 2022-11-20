@@ -9,7 +9,7 @@ mod clone;
 use utils::config;
 
 use rocket::fs::relative;
-use rocket::fs::FileServer;
+
 use rocket_dyn_templates::Template;
 use crate::repository::summary;
 use crate::repository::tree;

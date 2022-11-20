@@ -6,10 +6,10 @@ use crate::git::main_branch::main_branch;
 use crate::git::file::{files, file};
 use crate::PathBufWithDotfiles;
 use std::ffi::OsStr;
-use syntect::easy::HighlightLines;
+
 use syntect::parsing::SyntaxSet;
-use syntect::highlighting::{ThemeSet, Style};
-use syntect::util::LinesWithEndings;
+use syntect::highlighting::{ThemeSet};
+
 use syntect::html::highlighted_html_for_string;
 use std::path::Path;
 

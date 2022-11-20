@@ -1,6 +1,6 @@
 use rocket_dyn_templates::{context, Template};
 use crate::config::CONFIG;
-use std::fs;
+
 use crate::utils::markdown::md_to_html;
 use crate::utils::repo_config::repo_config;
 use crate::git::commits::get_commits;
