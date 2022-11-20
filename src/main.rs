@@ -8,8 +8,8 @@ mod utils;
 
 use utils::config;
 
-use std::path::Path;
 use rocket::fs::relative;
+use std::path::Path;
 
 use crate::repository::raw;
 use crate::repository::summary;
