@@ -1,4 +1,4 @@
-# [git.arthurmelton.com](git.arthurmelton.com)
+# [git.arthurmelton.com](https://git.arthurmelton.com)
 
 This is my git site, it took insperation from [Sourcehut](https://sourcehut.org/).
 Its not a fork but its practecly a remake, just for my use case. Please support
