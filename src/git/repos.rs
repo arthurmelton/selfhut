@@ -1,7 +1,7 @@
 use crate::config::CONFIG;
+use crate::utils::repo_config::repo_config;
 use serde_derive::Serialize;
 use std::fs;
-use crate::utils::repo_config::repo_config;
 
 pub fn get_repos() -> Option<Vec<Repo>> {
     let home = CONFIG.git_location.clone();

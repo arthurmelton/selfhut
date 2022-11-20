@@ -12,7 +12,7 @@ pub fn get_tag(repo_name: String, amount: usize) -> Option<Vec<String>> {
     while i < amount && tag.is_some() && tag.unwrap().is_some() {
         tags.push(tag.unwrap().unwrap().to_string());
         tag = tags_stringarray.next();
-        i+=1;
+        i += 1;
     }
     Some(tags)
 }

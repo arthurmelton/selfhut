@@ -1,5 +1,5 @@
-use pulldown_cmark::{Parser, Options, html};
 use emojicons::EmojiFormatter;
+use pulldown_cmark::{html, Options, Parser};
 
 pub fn md_to_html(input: &str) -> String {
     let input = EmojiFormatter(input).to_string();

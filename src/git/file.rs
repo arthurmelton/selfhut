@@ -1,8 +1,8 @@
-use serde_derive::{Serialize};
 use crate::config::CONFIG;
-use std::path::Component;
-use humansize::{format_size, DECIMAL};
 use git2::ObjectType;
+use humansize::{format_size, DECIMAL};
+use serde_derive::Serialize;
+use std::path::Component;
 use std::path::PathBuf;
 
 pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
@@ -11,7 +11,11 @@ pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
     }
     let mut location = CONFIG.git_location.clone();
     location.push(path.clone());
-    if location.components().into_iter().any(|x| x == Component::ParentDir) {
+    if location
+        .components()
+        .into_iter()
+        .any(|x| x == Component::ParentDir)
+    {
         return None;
     }
     let mut repo_path = CONFIG.git_location.clone();
@@ -26,20 +30,21 @@ pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
                 returns.push(File {
                     name: entry.name()?.to_string(),
                     size: match entry.kind() {
-                        Some(ObjectType::Blob) => {
-                            Some(format_size(entry.to_object(&repo).ok()?.into_blob().ok()?.size(), DECIMAL))
-                        },
-                        _ => None
+                        Some(ObjectType::Blob) => Some(format_size(
+                            entry.to_object(&repo).ok()?.into_blob().ok()?.size(),
+                            DECIMAL,
+                        )),
+                        _ => None,
                     },
                     file_type: match entry.kind() {
                         Some(ObjectType::Blob) => FileType::blob,
-                        _ => FileType::tree
+                        _ => FileType::tree,
                     },
                     properties: unix_mode::to_string(entry.filemode() as u32),
-                    properties_int: entry.filemode()
-                })   
+                    properties_int: entry.filemode(),
+                })
             }
-        },
+        }
         _ => {
             return None;
         }
@@ -53,7 +58,11 @@ pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<
     }
     let mut location = CONFIG.git_location.clone();
     location.push(path.clone());
-    if location.components().into_iter().any(|x| x == Component::ParentDir) {
+    if location
+        .components()
+        .into_iter()
+        .any(|x| x == Component::ParentDir)
+    {
         return None;
     }
     let mut repo_path = CONFIG.git_location.clone();
@@ -66,7 +75,9 @@ pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<
             let mut path_to_folder = PathBuf::from(path);
             path_to_folder.pop();
             let path_to_folder = path_to_folder.into_os_string().to_str()?.to_string();
-            let tree = repo.revparse_single(&format!("{}:{}", branch, path_to_folder)).ok()?;
+            let tree = repo
+                .revparse_single(&format!("{}:{}", branch, path_to_folder))
+                .ok()?;
             let tree = tree.as_tree()?;
             let tree_item = tree.get_id(blob.id())?;
             let file = File {
@@ -74,20 +85,19 @@ pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<
                 size: Some(format_size(blob.size(), DECIMAL)),
                 file_type: FileType::blob,
                 properties: unix_mode::to_string(tree_item.filemode() as u32),
-                properties_int: tree_item.filemode()
+                properties_int: tree_item.filemode(),
             };
             let content = match blob.is_binary() {
                 false => Some(String::from_utf8_lossy(blob.content()).into_owned()),
-                true => None
+                true => None,
             };
             return Some((file, content, blob.content().iter().map(|x| *x).collect()));
-        },
+        }
         _ => {
             return None;
         }
     }
 }
-
 
 #[derive(Serialize)]
 pub struct File {
@@ -95,11 +105,11 @@ pub struct File {
     pub size: Option<String>,
     pub file_type: FileType,
     pub properties: String,
-    pub properties_int: i32
+    pub properties_int: i32,
 }
 
 #[derive(Serialize)]
 pub enum FileType {
     blob,
-    tree
+    tree,
 }

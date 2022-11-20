@@ -1,9 +1,8 @@
-use rocket::fs::NamedFile;
 use crate::config::CONFIG;
 use crate::PathBufWithDotfiles;
+use rocket::fs::NamedFile;
 
-
-#[get("/<repo>/<path..>", rank=3)]
+#[get("/<repo>/<path..>", rank = 3)]
 pub async fn clone(repo: String, path: PathBufWithDotfiles) -> Option<NamedFile> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));

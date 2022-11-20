@@ -1,6 +1,6 @@
-use std::path::PathBuf;
-use rocket::http::uri::{Segments, error::PathError, fmt::Path};
+use rocket::http::uri::{error::PathError, fmt::Path, Segments};
 use rocket::request::FromSegments;
+use std::path::PathBuf;
 
 pub struct PathBufWithDotfiles(PathBuf);
 
