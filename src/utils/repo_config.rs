@@ -1,18 +1,14 @@
-use crate::config::CONFIG;
 use serde_derive::{Deserialize, Serialize};
-use std::fs;
+use crate::git::file::file;
+use crate::git::main_branch::main_branch;
 
 pub fn repo_config(repo: String) -> RepoConfig {
-    let mut config = CONFIG.git_location.clone();
-    config.push(format!("{}.git", repo));
-    config.push("repo.toml");
-    let config_string = match fs::read(config) {
-        Ok(content) => String::from_utf8_lossy(&content)
-            .parse()
-            .unwrap_or("".to_string()),
-        Err(_) => "".to_string(),
+    let main_branch = main_branch(repo.clone()).unwrap_or("".to_string());
+    let content = match file(repo.clone(), main_branch.clone(), "repo.toml".to_string()) {
+        Some(file) => file.1.unwrap_or("".to_string()),
+        None => "".to_string()
     };
-    match toml::from_str(&config_string) {
+    match toml::from_str(&content) {
         Ok(x) => x,
         Err(_) => RepoConfig {
             description: None,
