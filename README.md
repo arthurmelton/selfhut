@@ -28,8 +28,10 @@ To make a new git repo you need to run
 ```sh
 git init --bare my-repo.git
 ```
-After you do this you will need to cd into the directory and run
+After you do this you will need to cd into the directory and make a file at the 
+path `hooks/post-update` and set its contents to
 ```sh
-git update-server-info
+#!/bin/sh
+exec git update-server-info
 ```
 This should create the git and make it so that people can actually clone it!
