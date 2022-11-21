@@ -3,7 +3,7 @@ use crate::git::diffs::diffs;
 use chrono::{Duration, Utc};
 use chrono_humanize::HumanTime;
 use serde_derive::Serialize;
-use std::borrow::Cow;
+
 
 pub fn get_commits(
     repo_name: String,

@@ -1,17 +1,17 @@
 use crate::config::CONFIG;
 use crate::git::commits::get_commits;
-use crate::git::file::{file, files};
+
 use crate::git::main_branch::main_branch;
 use crate::utils::repo_config::repo_config;
 use crate::PathBufWithDotfiles;
 use rocket_dyn_templates::{context, Template};
-use std::ffi::OsStr;
-use std::path::Path;
-use syntect::easy::HighlightLines;
-use syntect::highlighting::{Style, ThemeSet};
-use syntect::html::highlighted_html_for_string;
-use syntect::parsing::SyntaxSet;
-use syntect::util::LinesWithEndings;
+
+
+
+
+
+
+
 
 #[get("/<repo>/log?<from>", rank = 2)]
 pub fn log_main(repo: String, from: Option<String>) -> Option<Template> {
