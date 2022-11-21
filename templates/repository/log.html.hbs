@@ -12,13 +12,7 @@
                 <a href="/{{../repo}}/log?from={{this.commit_hash}}#log-{{this.commit_hash}}" id="log-{{this.commit_hash}}"><span title="{{this.time_utc}}">{{this.time_relitive}}</span></a>
                 </small>
                 </div>
-                {{#if (eq this.commit_body "")}}
                 <pre class="commit">{{this.commit}}</pre>
-                {{else}}
-                <pre class="commit">{{this.commit}}
-
-{{this.commit_body}}</pre>
-                {{/if}}
                 </div>
                 {{/each}}
 			</div>
