@@ -1,8 +1,8 @@
 {{#*inline "page"}}
 {{> navbar}}
 <div class="header-extension" style="margin-bottom: 0;">
-	<div class="container-fluid tree-header">
-		<div class="breadcrumb">
+	<div class="blob container-fluid">
+		<span>
 			{{repo}}{{current_dir}}
 			<span class="text-muted" style="margin-left: 1rem">
 			<span title="{{files.0.properties_int}}">
@@ -28,16 +28,18 @@
 					</li>
 				</ul>
 			</div>
-		</div>
+		</span>
 		{{#if commit}}
-		<div class="commit-info">
-			<a href="/{{repo}}/commit/{{branch}}">{{commit.commit_hash_short}}</a> —
+		<div class="commit">
+			<a href="/{{repo}}/commit/{{commit.commit_hash}}">{{commit.commit_hash_short}}</a> —
 			{{commit.commitie}}
 			{{commit.commit}}
 			<span class="text-muted">
 			<span title="{{commit.time_utc}}">{{commit.time_relitive}}</span>
 			</span>
 		</div>
+        <div class="clearfix">
+        </div>
 		{{/if}}
 	</div>
 </div>
