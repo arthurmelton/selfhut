@@ -1,9 +1,9 @@
 use crate::config::CONFIG;
+use crate::git::diffs::diffs;
 use chrono::{Duration, Utc};
 use chrono_humanize::HumanTime;
 use serde_derive::Serialize;
 use std::borrow::Cow;
-use crate::git::diffs::diffs;
 
 pub fn get_commits(
     repo_name: String,
@@ -70,7 +70,7 @@ pub fn get_commits(
                             )
                         },
                         time_relitive: HumanTime::from(time).to_string(),
-                        commit_body: repo_commit.body().unwrap_or("").to_string()
+                        commit_body: repo_commit.body().unwrap_or("").to_string(),
                     });
                     i += 1;
                 }
