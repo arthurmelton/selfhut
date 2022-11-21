@@ -21,7 +21,7 @@ pub fn repository(repo: String) -> Option<Template> {
             domain: CONFIG.domain.to_string(),
             readme: md_to_html(&file.1?),
             active: "summary",
-            preview: get_commits(repo.clone(), 3, None),
+            preview: get_commits(repo.clone(), 3, None, None),
             main_branch,
             tag: match get_tag(repo.clone(), 1) {
                 Some(x) => match x.get(0) {
