@@ -3,6 +3,7 @@ use chrono::{Duration, Utc};
 use chrono_humanize::HumanTime;
 use serde_derive::Serialize;
 use std::borrow::Cow;
+use crate::git::diffs::diffs;
 
 pub fn get_commits(
     repo_name: String,
@@ -31,33 +32,18 @@ pub fn get_commits(
                 let mut allowed = true;
                 if path.is_some() {
                     let path_value = path.as_ref().unwrap();
-                    match repo_commit.tree() {
-                        Ok(tree) => match repo_commit.parent(0) {
-                            Ok(parent) => match parent.tree() {
-                                Ok(parent_tree) => {
-                                    match repo.diff_tree_to_tree(
-                                        Some(&tree),
-                                        Some(&parent_tree),
-                                        None,
-                                    ) {
-                                        Ok(diff) => {
-                                            let files = diff
-                                                .deltas()
-                                                .map(|i| i.new_file().path())
-                                                .filter(|i| i.is_some())
-                                                .map(|i| i.unwrap().to_string_lossy())
-                                                .filter(|i| i.starts_with(path_value))
-                                                .count();
-                                            allowed = files > 0;
-                                        }
-                                        Err(_) => {}
-                                    }
-                                }
-                                Err(_) => {}
-                            },
-                            Err(_) => {}
-                        },
-                        Err(_) => {}
+                    match diffs(repo_commit.clone(), &repo) {
+                        Some(diff) => {
+                            let files = diff
+                                .deltas()
+                                .map(|i| i.new_file().path())
+                                .filter(|i| i.is_some())
+                                .map(|i| i.unwrap().to_string_lossy())
+                                .filter(|i| i.starts_with(path_value))
+                                .count();
+                            allowed = files > 0;
+                        }
+                        None => {}
                     }
                 }
                 if allowed {
@@ -84,6 +70,7 @@ pub fn get_commits(
                             )
                         },
                         time_relitive: HumanTime::from(time).to_string(),
+                        commit_body: repo_commit.body().unwrap_or("").to_string()
                     });
                     i += 1;
                 }
@@ -97,10 +84,11 @@ pub fn get_commits(
 
 #[derive(Serialize, Clone)]
 pub struct Commits {
-    commit: String,
-    commit_hash: String,
-    commit_hash_short: String,
-    commitie: String,
-    time_utc: String,
-    time_relitive: String,
+    pub commit: String,
+    pub commit_hash: String,
+    pub commit_hash_short: String,
+    pub commitie: String,
+    pub time_utc: String,
+    pub time_relitive: String,
+    pub commit_body: String,
 }

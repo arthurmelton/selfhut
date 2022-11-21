@@ -11,6 +11,7 @@ use utils::config;
 use rocket::fs::relative;
 use std::path::Path;
 
+use crate::repository::log;
 use crate::repository::raw;
 use crate::repository::summary;
 use crate::repository::tree;
@@ -30,7 +31,9 @@ fn rocket() -> _ {
                 tree::tree_main,
                 tree::tree,
                 clone::clone,
-                raw::raw
+                raw::raw,
+                log::log_main,
+                log::log,
             ],
         )
         .attach(Template::fairing())

@@ -1,62 +1,31 @@
 {{#*inline "page"}}
 {{> navbar}}
-<div class="header-extension">
-	<div class="container tree-header">
-		<div class="breadcrumb">
-			{{repo}}{{current_dir}}
-			<span class="text-muted" style="margin-left: 1rem">
-			<span title="40000">
-			d---------
-			</span>
-			</span>
-			<div class="blob-nav" style="margin-left: 1rem">
-				<ul class="nav nav-tabs">
-					<li class="nav-item">
-						<a class="nav-link active" href="/{{repo}}/tree/{{branch}}{{current_dir}}">Tree</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/{{repo}}/log/{{branch}}{{current_dir}}">Log</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		{{#if commit}}
-		<div class="commit-info">
-			<a href="/{{repo}}/commit/{{branch}}">{{commit.commit_hash_short}}</a> —
-			{{commit.commitie}}
-			{{commit.commit}}
-			<span class="text-muted">
-			<span title="{{commit.time_utc}}">{{commit.time_relitive}}</span>
-			</span>
-		</div>
-		{{/if}}
-	</div>
-</div>
 <div class="container">
 	<div class="row" style="margin-bottom: 1rem">
 		<div class="col-md-12">
-			<div class="tree-list">
-				{{#each files}}	
-				<div class="mode">
-					<span title="{{this.properties_int}}">
-					{{this.properties}}
-					</span>
-				</div>
-				<div class="name {{this.file_type}}">
-					<a href="/{{../repo}}/tree/{{../branch}}{{../current_dir_file}}{{this.name}}">
-					{{this.name}}
-					</a>
-				</div>
-				<div class="commit"></div>
-				<div class="date"></div>
-				<div class="size">
-					<span title="{{this.size}}">
-					{{this.size}}
-					</span>
-				</div>
-				{{/each}}
+			<div class="event-list">
+				{{#each commits}}	
+				<div class="event">
+                <div>
+                <a href="/{{../repo}}/commit/{{this.commit_hash}}" title="{{this.commit_hash}}">{{this.commit_hash_short}}</a> — {{this.commitie}}  
+                <small class="pull-right">
+                <a href="/{{../repo}}/log?from={{this.commit_hash}}#log-{{this.commit_hash}}" id="log-{{this.commit_hash}}"><span title="{{this.time_utc}}">{{this.time_relitive}}</span></a>
+                </small>
+                </div>
+                {{#if (eq this.commit_body "")}}
+                <pre class="commit">{{this.commit}}</pre>
+                {{else}}
+                <pre class="commit">{{this.commit}}
+
+{{this.commit_body}}</pre>
+                {{/if}}
+                </div>
+                {{/each}}
 			</div>
-		</div>
+            {{#if last_commit}}
+                <a class="pull-right btn btn-primary" href="/{{repo}}/log/{{branch}}{{current_dir}}?from={{last_commit}}">Next <span aria-hidden="true" class="icon icon-caret-right"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg></span></a>
+		    {{/if}}
+        </div>
 	</div>
 </div>
 {{/inline}}
