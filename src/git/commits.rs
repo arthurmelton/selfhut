@@ -32,36 +32,37 @@ pub fn get_commits(
                 if path.is_some() {
                     let path_value = path.as_ref().unwrap();
                     match repo_commit.tree() {
-                        Ok(tree) => {
-                                match repo_commit.parent(0) {
-                                    Ok(parent) => {
-                                        match parent.tree() {
-                                            Ok(parent_tree) => {
-                                                match repo.diff_tree_to_tree(Some(&tree), Some(&parent_tree), None) {
-                                                    Ok(diff) => {
-                                                        let files = diff.deltas()
-                                                            .map(|i| i.new_file().path())
-                                                            .filter(|i| i.is_some())
-                                                            .map(|i| i.unwrap().to_string_lossy())
-                                                            .filter(|i| i.starts_with(path_value))
-                                                            .count();
-                                                        allowed = files > 0;
-                                                    },
-                                                    Err(_) => {}
-                                                }
-
-                                            }
-                                            Err(_) => {}
+                        Ok(tree) => match repo_commit.parent(0) {
+                            Ok(parent) => match parent.tree() {
+                                Ok(parent_tree) => {
+                                    match repo.diff_tree_to_tree(
+                                        Some(&tree),
+                                        Some(&parent_tree),
+                                        None,
+                                    ) {
+                                        Ok(diff) => {
+                                            let files = diff
+                                                .deltas()
+                                                .map(|i| i.new_file().path())
+                                                .filter(|i| i.is_some())
+                                                .map(|i| i.unwrap().to_string_lossy())
+                                                .filter(|i| i.starts_with(path_value))
+                                                .count();
+                                            allowed = files > 0;
                                         }
+                                        Err(_) => {}
                                     }
-                                    Err(_) => {}
                                 }
+                                Err(_) => {}
+                            },
+                            Err(_) => {}
                         },
                         Err(_) => {}
                     }
                 }
                 if allowed {
-                    let time = Duration::seconds(repo_commit.time().seconds() - Utc::now().timestamp());
+                    let time =
+                        Duration::seconds(repo_commit.time().seconds() - Utc::now().timestamp());
                     commits.push(Commits {
                         commit_hash: commit_rev.to_string(),
                         commit: repo_commit.message().unwrap_or("").to_string(),
