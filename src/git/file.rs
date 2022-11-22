@@ -9,15 +9,6 @@ pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
     if branch.contains(":") {
         return None;
     }
-    let mut location = CONFIG.git_location.clone();
-    location.push(path.clone());
-    if location
-        .components()
-        .into_iter()
-        .any(|x| x == Component::ParentDir)
-    {
-        return None;
-    }
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
     let repo = git2::Repository::open(repo_path).ok()?;
@@ -54,15 +45,6 @@ pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
 
 pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<String>, Vec<u8>)> {
     if branch.contains(":") {
-        return None;
-    }
-    let mut location = CONFIG.git_location.clone();
-    location.push(path.clone());
-    if location
-        .components()
-        .into_iter()
-        .any(|x| x == Component::ParentDir)
-    {
         return None;
     }
     let mut repo_path = CONFIG.git_location.clone();

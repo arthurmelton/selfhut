@@ -15,13 +15,13 @@
 			<div class="blob-nav" style="margin-left: 1rem">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a class="nav-link active" href="/{{repo}}/tree/{{branch}}{{current_dir}}">View</a>
+						<a class="nav-link" href="/{{repo}}/tree/{{branch}}{{current_dir}}">View</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/{{repo}}/log/{{branch}}{{current_dir}}">Log</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/{{repo}}/blame/{{branch}}{{current_dir}}">Blame</a>
+						<a class="nav-link active" href="/{{repo}}/blame/{{branch}}{{current_dir}}">Blame</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/{{repo}}/blob/{{branch}}{{current_dir}}">View Raw</a>
@@ -46,7 +46,21 @@
 <div class="container-fluid code-viewport">
 	<div class="row" style="margin-right: 0;">
 		<div class="col-md-12 code-view">
-			<pre class="lines">
+            <pre class="ruler"><span>
+            </span></pre>
+            <pre class="blame-user">
+{{#each blame}}
+<div class="hunk"><a href="/{{../repo}}/commit/{{this.commit.commit_hash}}">{{this.commit.commit_hash_short}}</a> {{this.commit.commitie}}</div>{{#each this.lines}}
+{{/each}}
+{{/each}}
+</pre>
+            <pre class="blame-time">
+{{#each blame}}
+<div class="hunk"><a href="/{{../repo}}/blame/{{this.commit.commit_hash}}{{../current_dir}}"><span title="{{this.commit.time_utc}}">{{this.commit.time_relitive}}</span></a></div>{{#each this.lines}}
+{{/each}}
+{{/each}}
+</pre>
+            <pre class="lines">
 {{#each lines}}
 <a href="#L{{this}}" id="L{{this}}">{{this}}</a>
 {{/each}}
