@@ -2,7 +2,7 @@ use crate::config::CONFIG;
 use git2::ObjectType;
 use humansize::{format_size, DECIMAL};
 use serde_derive::Serialize;
-use std::path::Component;
+
 use std::path::PathBuf;
 
 pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {

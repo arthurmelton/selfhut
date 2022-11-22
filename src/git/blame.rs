@@ -1,7 +1,7 @@
 use crate::config::CONFIG;
 use crate::git::commits::{get_commits, Commits};
 use serde_derive::Serialize;
-use std::ops::Range;
+
 use std::path::Path;
 
 pub fn blame<'a>(repo: String, branch: String, path: String) -> Option<Vec<Blame>> {

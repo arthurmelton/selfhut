@@ -2,7 +2,7 @@ use crate::config::CONFIG;
 use crate::git::blame::blame;
 use crate::git::commits::get_commits;
 use crate::git::file::file;
-use crate::git::file::files;
+
 use crate::utils::repo_config::repo_config;
 use crate::PathBufWithDotfiles;
 use rocket_dyn_templates::{context, Template};
