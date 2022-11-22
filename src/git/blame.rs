@@ -1,8 +1,8 @@
 use crate::config::CONFIG;
-use std::path::Path;
-use crate::git::commits::{Commits, get_commits};
+use crate::git::commits::{get_commits, Commits};
 use serde_derive::Serialize;
 use std::ops::Range;
+use std::path::Path;
 
 pub fn blame<'a>(repo: String, branch: String, path: String) -> Option<Vec<Blame>> {
     if branch.contains(":") {
@@ -15,9 +15,16 @@ pub fn blame<'a>(repo: String, branch: String, path: String) -> Option<Vec<Blame
     let blame = repo.blame_file(Path::new(&path), None).ok()?;
     let mut blames = Vec::new();
     for i in blame.iter() {
-        blames.push( Blame {
-            commit: (*get_commits(repo_clone.clone(), 1, Some(i.final_commit_id().to_string()), None)?.first()?).clone(),
-            lines: (0..i.lines_in_hunk()-1).collect()
+        blames.push(Blame {
+            commit: (*get_commits(
+                repo_clone.clone(),
+                1,
+                Some(i.final_commit_id().to_string()),
+                None,
+            )?
+            .first()?)
+            .clone(),
+            lines: (0..i.lines_in_hunk() - 1).collect(),
         });
     }
     Some(blames)
@@ -26,5 +33,5 @@ pub fn blame<'a>(repo: String, branch: String, path: String) -> Option<Vec<Blame
 #[derive(Serialize, Clone)]
 pub struct Blame {
     commit: Commits,
-    lines: Vec<usize>
+    lines: Vec<usize>,
 }

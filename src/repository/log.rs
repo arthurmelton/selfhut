@@ -6,13 +6,6 @@ use crate::utils::repo_config::repo_config;
 use crate::PathBufWithDotfiles;
 use rocket_dyn_templates::{context, Template};
 
-
-
-
-
-
-
-
 #[get("/<repo>/log?<from>", rank = 2)]
 pub fn log_main(repo: String, from: Option<String>) -> Option<Template> {
     let main_branch = main_branch(repo.clone())?;

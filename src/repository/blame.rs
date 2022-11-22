@@ -1,20 +1,24 @@
 use crate::config::CONFIG;
-use crate::git::file::files;
-use rocket_dyn_templates::{context, Template};
+use crate::git::blame::blame;
 use crate::git::commits::get_commits;
+use crate::git::file::file;
+use crate::git::file::files;
 use crate::utils::repo_config::repo_config;
-use syntect::html::highlighted_html_for_string;
+use crate::PathBufWithDotfiles;
+use rocket_dyn_templates::{context, Template};
+use std::ffi::OsStr;
 use std::path::Path;
 use syntect::highlighting::ThemeSet;
+use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxSet;
-use crate::git::file::file;
-use crate::git::blame::blame;
-use crate::PathBufWithDotfiles;
-use std::ffi::OsStr;
 
 #[get("/<repo>/blame/<branch>/<location..>", rank = 2)]
 pub fn blames(repo: String, branch: String, location: PathBufWithDotfiles) -> Option<Template> {
-    let blames = blame(repo.clone(), branch.clone(), location.get().display().to_string());
+    let blames = blame(
+        repo.clone(),
+        branch.clone(),
+        location.get().display().to_string(),
+    );
     let file = file(
         repo.clone(),
         branch.clone(),
@@ -37,8 +41,7 @@ pub fn blames(repo: String, branch: String, location: PathBufWithDotfiles) -> Op
         let s = file.1.as_ref().unwrap();
         lines = (1..s.lines().count() + 1).collect();
         content =
-            highlighted_html_for_string(s, &ps, syntax, &ts.themes["Solarized (light)"])
-                .ok()?
+            highlighted_html_for_string(s, &ps, syntax, &ts.themes["Solarized (light)"]).ok()?
     }
     Some(Template::render(
         "repository/blame",
