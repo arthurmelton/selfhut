@@ -6,14 +6,6 @@ Drew DeVault at [https://sourcehut.org/pricing/](https://sourcehut.org/pricing/)
 If you are going to run this yourself. I really recommend supporting Drew DeVault
 because without him this would not exist!
 
-## Email
-
-This can also run on any email server though a open imap connection. The actual
-mailing list and creation of accounts are handled through different programs.
-For every repo you need to make a email for it (ex. if I have a repo called
-"My-Cool-Program" you need to make an email for it called 
-"My-Cool-Program@example.com").
-
 ## Hosting
 
 Simpily run the binary and a website is going to be hosted at port 8000. I would
@@ -21,6 +13,17 @@ also recoment using something like nginx to change the port and to do caching. I
 you want to change the config (this would make sense because at default it only
 has a example user), edit the file in `$(XDG_CONFIG_HOME)/git-server/git-server.toml`
 to your liking.
+
+## Config
+
+This would be a server config that has every atibue set.
+```toml
+name = "Billy Bob Jr"
+description = "I am supper cool and think that [This](https://exmaple.com) is really cool!"
+get_location = "/var/git"
+domain = "https://billyscoolwebsite.com"
+payment_link = "https://paypal.me/billy" # this is optinal, if you dont want to take donations then just remove the line dont set it to ""
+```
 
 ## Making a new git
 
@@ -36,3 +39,11 @@ path `hooks/post-update` and set its contents to
 exec git update-server-info
 ```
 This should create the git and make it so that people can actually clone it!
+
+## Email
+
+This can also run on any email server though a open imap connection. The actual
+mailing list and creation of accounts are handled through different programs.
+For every repo you need to make a email for it (ex. if I have a repo called
+"My-Cool-Program" you need to make an email for it called 
+"My-Cool-Program@example.com").
