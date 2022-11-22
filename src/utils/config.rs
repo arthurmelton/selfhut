@@ -21,6 +21,7 @@ lazy_static! {
                 git_location: dirs::home_dir().unwrap_or(PathBuf::from("/")),
                 domain: "127.0.0.1".to_string(),
                 payment_link: None,
+                mailing_list: None,
             };
             config.pop();
             let _ = fs::create_dir_all(config.clone());
@@ -42,4 +43,12 @@ pub struct Config {
     pub git_location: PathBuf,
     pub domain: String,
     pub payment_link: Option<String>,
+    pub mailing_list: Option<Email>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Email {
+    pub password: String,
+    pub imap_url: String,
+    pub port: u16,
 }

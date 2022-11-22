@@ -43,6 +43,7 @@ pub fn log_main(repo: String, from: Option<String>) -> Option<Template> {
             current_dir: "/",
             payment: CONFIG.payment_link.clone(),
             last_commit,
+            mailing_list: CONFIG.mailing_list.clone()
         },
     ))
 }
@@ -93,6 +94,7 @@ pub fn log(
             current_dir: format!("/{}", location.get().display()),
             payment: CONFIG.payment_link.clone(),
             last_commit,
+            mailing_list: CONFIG.mailing_list.clone()
         },
     ))
 }

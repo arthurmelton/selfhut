@@ -50,6 +50,7 @@
 			{{/if}}
 			" href="/{{repo}}/refs">refs</a>
 		</li>
+        {{#if mailing_list}}
 		<li class="nav-item">
 			<a class="nav-link
 			{{#if (eq active "mailing_list")}}
@@ -57,6 +58,7 @@
 			{{/if}}
 			" href="/{{repo}}/lists">mailing lists</a>
 		</li>
+        {{/if}}
 		{{#if payment}}
 		<li class="nav-item">
 			<a class="nav-link" href="{{payment}}" target="_new">

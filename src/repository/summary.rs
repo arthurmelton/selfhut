@@ -30,7 +30,8 @@ pub fn repository(repo: String) -> Option<Template> {
                 },
                 None => None
             },
-            payment: CONFIG.payment_link.clone()
+            payment: CONFIG.payment_link.clone(),
+            mailing_list: CONFIG.mailing_list.clone()
         },
     ))
 }

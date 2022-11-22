@@ -66,7 +66,8 @@ pub fn blames(repo: String, branch: String, location: PathBufWithDotfiles) -> Op
             branch: branch.clone(),
             current_dir_file: format!("/{}/", location.get().display()).replace("//", "/"),
             current_dir: format!("/{}", location.get().display()),
-            payment: CONFIG.payment_link.clone()
+            payment: CONFIG.payment_link.clone(),
+            mailing_list: CONFIG.mailing_list.clone()
         },
     ))
 }

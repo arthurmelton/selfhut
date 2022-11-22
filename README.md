@@ -23,6 +23,11 @@ description = "I am supper cool and think that [This](https://exmaple.com) is re
 get_location = "/var/git"
 domain = "https://billyscoolwebsite.com"
 payment_link = "https://paypal.me/billy" # this is optinal, if you dont want to take donations then just remove the line dont set it to ""
+
+[mailing_list]
+password = "********"
+imap_url = "imap.billyscoolwebsite.com"
+port = 993
 ```
 
 ## Making a new git
