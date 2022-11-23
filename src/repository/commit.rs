@@ -1,20 +1,20 @@
 use crate::config::CONFIG;
 use crate::git::blame::blame;
 use crate::git::commits::get_commits;
-use crate::git::file::file;
 use crate::git::diffs::diffs;
-use serde_derive::Serialize;
+use crate::git::file::file;
 use git2::DiffLineType::*;
+use serde_derive::Serialize;
 
 use crate::utils::repo_config::repo_config;
 use crate::PathBufWithDotfiles;
+use git2::Delta::*;
 use rocket_dyn_templates::{context, Template};
 use std::ffi::OsStr;
 use std::path::Path;
 use syntect::highlighting::ThemeSet;
 use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxSet;
-use git2::Delta::*;
 
 #[get("/<repo>/commit/<oid>", rank = 2)]
 pub fn commit(repo: String, oid: String) -> Option<Template> {
@@ -109,7 +109,7 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
                             Conflicted => 'C',
                             _ => ' ',
                         },
-                        insertions: patch.line_stats().ok()?.1, 
+                        insertions: patch.line_stats().ok()?.1,
                         deletions: patch.line_stats().ok()?.2,
                         hunks
                     });
@@ -117,7 +117,7 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
                 }
                 items
             },
-        }
+        },
     ))
 }
 
@@ -139,7 +139,7 @@ pub struct Files {
     status: char,
     insertions: usize,
     deletions: usize,
-    hunks: Vec<Hunk>
+    hunks: Vec<Hunk>,
 }
 
 #[derive(Serialize, Clone)]
@@ -150,7 +150,7 @@ pub struct Hunk {
     third: u32,
     fourth: u32,
     first_line: String,
-    lines: Vec<Lines>
+    lines: Vec<Lines>,
 }
 
 #[derive(Serialize, Clone)]
@@ -158,5 +158,5 @@ pub struct Lines {
     line_n: usize,
     class: String,
     types: char,
-    line: String
+    line: String,
 }

@@ -12,11 +12,11 @@ use rocket::fs::relative;
 use std::path::Path;
 
 use crate::repository::blame;
+use crate::repository::commit;
 use crate::repository::log;
 use crate::repository::raw;
 use crate::repository::summary;
 use crate::repository::tree;
-use crate::repository::commit;
 use crate::utils::own_pathbuf::PathBufWithDotfiles;
 use rocket_dyn_templates::Template;
 
