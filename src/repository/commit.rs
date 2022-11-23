@@ -40,7 +40,10 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
             parent: match commit.parent_id(0) {
                 Ok(parent) => {
                     match get_commits(repo_clone.clone(), 1, Some(parent.to_string()), None) {
-                        Some(x) => Some(x.first()?.clone()),
+                        Some(x) => match x.first() {
+                            Some(x) => Some(x.clone()),
+                            None => None
+                        },
                         None => None
                     }
                 },
