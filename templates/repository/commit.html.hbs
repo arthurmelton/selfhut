@@ -12,7 +12,7 @@
                         <a href="/{{repo}}/commit/{{parent.commit_hash}}">{{parent.commit_hash_short}}</a>
                     {{/if}}
                     <small class="pull-right">
-                    <a href="/{{repo}}/log?from={{commit.commit_hash}}#log-{{this.commit_hash}}" id="log-{{commit.commit_hash}}"><span title="{{commit.time_utc}}">{{commit.time_relitive}}</span></a>
+                    <a href="/{{repo}}/log?from={{commit.commit_hash}}#log-{{commit.commit_hash}}" id="log-{{commit.commit_hash}}"><span title="{{commit.time_utc}}">{{commit.time_relitive}}</span></a>
                     </small>
                     </div>
                     <pre class="commit">{{commit.commit}}</pre>
