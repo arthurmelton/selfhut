@@ -1,0 +1,56 @@
+{{#*inline "page"}}
+{{> navbar}}
+<div class="container">
+	<div class="row" style="margin-bottom: 1rem">
+		<div class="col-md-10">
+			<div class="event-list">
+				<div class="event">
+                    <div>
+                    {{commit.commit_hash}} — {{commit.commitie}}  
+                    {{#if parent}}
+                        <span aria-hidden="true" class="icon icon-code-branch sm"><svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M384 144c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 36.4 24.3 67.1 57.5 76.8-.6 16.1-4.2 28.5-11 36.9-15.4 19.2-49.3 22.4-85.2 25.7-28.2 2.6-57.4 5.4-81.3 16.9v-144c32.5-10.2 56-40.5 56-76.3 0-44.2-35.8-80-80-80S0 35.8 0 80c0 35.8 23.5 66.1 56 76.3v199.3C23.5 365.9 0 396.2 0 432c0 44.2 35.8 80 80 80s80-35.8 80-80c0-34-21.2-63.1-51.2-74.6 3.1-5.2 7.8-9.8 14.9-13.4 16.2-8.2 40.4-10.4 66.1-12.8 42.2-3.9 90-8.4 118.2-43.4 14-17.4 21.1-39.8 21.6-67.9 31.6-10.8 54.4-40.7 54.4-75.9zM80 64c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm0 384c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zm224-320c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16z"></path></svg></span>    
+                        <a href="/{{repo}}/commit/{{parent.commit_hash}}">{{parent.commit_hash_short}}</a>
+                    {{/if}}
+                    <small class="pull-right">
+                    <a href="/{{repo}}/log?from={{commit.commit_hash}}#log-{{this.commit_hash}}" id="log-{{commit.commit_hash}}"><span title="{{commit.time_utc}}">{{commit.time_relitive}}</span></a>
+                    </small>
+                    </div>
+                    <pre class="commit">{{commit.commit}}</pre>
+                </div>
+			</div>
+        </div>
+        <div class="col-md-2">
+            <div style="margin-bottom: 1rem">
+                <a class="btn btn-primary btn-block" href="/{{repo}}/patch/{{commit.commit_hash}}">patch <span aria-hidden="true" class="icon icon-caret-right"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span></a>
+                <a class="btn btn-default btn-block" href="/{{repo}}/tree/{{commit.commit_hash}}">browse <span aria-hidden="true" class="icon icon-caret-right"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span></a>
+            </div>
+        </div>
+	</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="event-list">
+                <div class="event diff">
+                    <pre>{{files_changed}} files changed, <strong class="text-success">{{insertions}}</strong> insertions(+), <strong class="text-danger">{{deletions}}</strong> deletions(-)
+{{#each files}}
+
+{{#if (or (eq this.status "R") (eq this.status "C") )}}{{this.status}} <a href="#{{this.end_path}}">{{this.beging_path}}</a> => {{this.status}} <a href="#{{this.end_path}}">{{this.end_path}}</a>{{else}}{{this.status}} <a href="#{{this.beging_path}}">{{this.beging_path}}</a>{{/if}}{{/each}}</pre>
+                </div>
+                <div style="margin-bottom: 2rem"></div>
+                {{#each files}}
+                    <pre style="margin-bottom: 0; background: transparent; padding: 0;">{{this.status}} <a href="/{{../repo}}/tree/{{../parent.commit_hash}}/{{this.beging_path}}" id="{{this.beging_path}}">{{this.beging_path}}</a> =&gt; <a href="/{{../repo}}/tree/{{../commit.commit_hash}}/{{this.end_path}}" id="{{this.end_path}}">{{this.end_path}}</a> <span class="pull-right"><ins class="text-success">+{{this.insertions}}</ins> <del class="text-danger">-{{this.deletions}}</del></span></pre>
+                    <div class="event diff">
+                    <pre>
+{{#each hunks}}
+<strong class="text-info">@@ <a href="/{{../../repo}}/tree/{{../../parent.commit_hash}}/{{this.end_path}}#L{{this.first}}" style="text-decoration: underline">{{this.first}}</a>,{{this.second}} <a href="/{{../../repo}}/tree/{{../../commit.commit_hash}}/{{this.end_path}}#L{{this.third}}" style="text-decoration: underline">{{this.third}}</a>,{{this.fourth}} @@{{this.first_line}}</strong>
+{{#each lines}}</span><span class="{{this.class}}"><a aria-hidden="true" class="lineno" href="#{{../../this.end_path}}-{{../this.hunk_n}}-{{this.line_n}}" id="{{../../this.end_path}}-{{../this.hunk_n}}-{{this.line_n}}" style="color: inherit">{{this.types}}</a>{{this.line}}</span>{{/each}}
+{{/each}}
+</pre>
+                    </div>
+                {{/each}}
+        </div>
+    </div>
+</div>
+{{/inline}}
+{{> layout}}
