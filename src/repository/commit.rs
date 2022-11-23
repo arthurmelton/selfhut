@@ -11,11 +11,6 @@ use crate::utils::repo_config::repo_config;
 use git2::Delta::*;
 use rocket_dyn_templates::{context, Template};
 
-
-
-
-
-
 #[get("/<repo>/commit/<oid>", rank = 2)]
 pub fn commit(repo: String, oid: String) -> Option<Template> {
     let mut repo_path = CONFIG.git_location.clone();
