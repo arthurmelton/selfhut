@@ -25,7 +25,7 @@ get_location = "/var/git"
 domain = "https://billyscoolwebsite.com"
 payment_link = "https://paypal.me/billy" # this is optinal, if you dont want to take donations then just remove the line dont set it to ""
 
-[mailing_list]
+[mailing_list] # This whole section is optinal, just remove it if you dont want email support
 password = "********"
 imap_url = "imap.billyscoolwebsite.com"
 port = 993
