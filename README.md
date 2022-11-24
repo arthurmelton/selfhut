@@ -21,7 +21,7 @@ This would be a server config that has every atibue set.
 ```toml
 name = "Billy Bob Jr"
 description = "I am supper cool and think that [This](https://exmaple.com) is really cool!"
-get_location = "/var/git"
+git_location = "/var/git"
 domain = "https://billyscoolwebsite.com"
 payment_link = "https://paypal.me/billy" # this is optinal, if you dont want to take donations then just remove the line dont set it to ""
 
