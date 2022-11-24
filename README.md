@@ -1,4 +1,4 @@
-# [git.arthurmelton.com](https://git.arthurmelton.com)
+# [Selfhut](https://git.arthurmelton.com)
 
 This is my git site, it took insperation from [Sourcehut](https://sourcehut.org/).
 Its not a fork but its practecly a remake, just for my use case. Please support
@@ -17,12 +17,12 @@ To install you will need:
 Once you have these just run these steps.
 
 ```sh
-git clone https://git.arthurmelton.com/git.arthurmelton.com
-cd git.arthurmelton.com
+git clone https://git.arthurmelton.com/selfhut
+cd selfhut
 cargo build --release
 ```
 
-The binary executable will be at `./target/release/git`, you can just run this
+The binary executable will be at `./target/release/selfhut`, you can just run this
 and your server should stort working!
 
 ## Hosting
@@ -30,9 +30,9 @@ and your server should stort working!
 Simpily run the binary and a website is going to be hosted at port 8000. I would
 also recoment using something like nginx to change the port and to do caching. If 
 you want to change the config (this would make sense because at default it only
-has a example user), edit the file in `$(XDG_CONFIG_HOME)/git-server/git-server.toml`
+has a example user), edit the file in `$(XDG_CONFIG_HOME)/selfhut/selfhut.toml`
 to your liking. To add a `favicon.ico` you need to add it to 
-`$(XDG_CONFIG_HOME)/git-server/favicon.ico`. 
+`$(XDG_CONFIG_HOME)/selfhut/favicon.ico`. 
 
 ## Config
 

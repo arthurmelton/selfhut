@@ -5,8 +5,8 @@ use std::{fs, path::PathBuf};
 lazy_static! {
     pub static ref CONFIG: Config = {
         let mut config = dirs::config_dir().expect("Could not get the config directory");
-        config.push("git-server");
-        config.push("git-server.toml");
+        config.push("selfhut");
+        config.push("selfhut.toml");
         if config.exists() {
             let config: Config = toml::from_str(&String::from_utf8_lossy(
                 &fs::read(config.as_path()).expect("Failed to read the config file"),

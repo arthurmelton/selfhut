@@ -65,7 +65,7 @@ async fn robots() -> Option<rocket::fs::NamedFile> {
 #[get("/favicon.ico")]
 async fn favicon() -> Option<rocket::fs::NamedFile> {
     let mut path = dirs::config_dir().expect("Could not get the config directory");
-    path.push("git-server");
+    path.push("selfhut");
     path.push("favicon.ico"); 
     rocket::fs::NamedFile::open(path).await.ok()
 }
