@@ -30,6 +30,7 @@ fn rocket() -> _ {
             routes![
                 file_server,
                 robots,
+                favicon,
                 index::index,
                 summary::repository,
                 tree::tree_main,
@@ -58,5 +59,13 @@ async fn file_server(path: PathBufWithDotfiles) -> Option<rocket::fs::NamedFile>
 #[get("/robots.txt")]
 async fn robots() -> Option<rocket::fs::NamedFile> {
     let path = Path::new(relative!("static")).join(Path::new("robots.txt"));
+    rocket::fs::NamedFile::open(path).await.ok()
+}
+
+#[get("/favicon.ico")]
+async fn favicon() -> Option<rocket::fs::NamedFile> {
+    let mut path = dirs::config_dir().expect("Could not get the config directory");
+    path.push("git-server");
+    path.push("favicon.ico"); 
     rocket::fs::NamedFile::open(path).await.ok()
 }

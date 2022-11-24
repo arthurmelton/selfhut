@@ -12,7 +12,8 @@ Simpily run the binary and a website is going to be hosted at port 8000. I would
 also recoment using something like nginx to change the port and to do caching. If 
 you want to change the config (this would make sense because at default it only
 has a example user), edit the file in `$(XDG_CONFIG_HOME)/git-server/git-server.toml`
-to your liking.
+to your liking. To add a `favicon.ico` you need to add it to 
+`$(XDG_CONFIG_HOME)/git-server/favicon.ico`. 
 
 ## Config
 
