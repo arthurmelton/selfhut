@@ -123,10 +123,10 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
 pub fn patch(repo: String, oid: String) -> Option<String> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
-    let repo_clone = repo.clone();
+    let _repo_clone = repo.clone();
     let repo = git2::Repository::open(repo_path).ok()?;
     let commit = repo.find_commit(git2::Oid::from_str(&oid).ok()?).ok()?;
-    let diff = diffs(commit, &repo)?;
+    let _diff = diffs(commit, &repo)?;
     None
 }
 

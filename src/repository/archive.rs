@@ -2,8 +2,8 @@ use crate::config::CONFIG;
 use crate::git::get_all::files;
 use tar::{Builder, Header};
 use rocket::response::stream::ByteStream;
-use rocket::futures::stream::{repeat, StreamExt};
-use rocket::tokio::time::{self, Duration};
+
+
 
 #[get("/<repo>/archive/<oid>", rank = 2)]
 pub fn archive(repo: String, oid: String) -> ByteStream![Vec<u8>] {
