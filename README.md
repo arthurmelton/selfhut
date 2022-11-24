@@ -31,6 +31,16 @@ imap_url = "imap.billyscoolwebsite.com"
 port = 993
 ```
 
+## Repo Config
+
+A repo config is a file called `repo.toml` in the `HEAD` of your git repo. This
+controlls some things like like the repo description and website. A example
+would be this.
+```toml
+description="A really cool program I made"
+website="https://cool-program.com"
+```
+
 ## Making a new git
 
 To make a new git repo you need to run 
