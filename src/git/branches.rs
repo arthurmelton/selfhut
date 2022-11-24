@@ -1,5 +1,5 @@
 use crate::config::CONFIG;
-use crate::git::commits::{Commits, get_commits};
+use crate::git::commits::{get_commits, Commits};
 use serde_derive::Serialize;
 
 pub fn branches(repo_name: String) -> Option<Vec<Branch>> {
@@ -11,15 +11,20 @@ pub fn branches(repo_name: String) -> Option<Vec<Branch>> {
         match i {
             Ok(x) => match x.0.name() {
                 Ok(name) => match name {
-                        Some(name) => branches.push(Branch {
-                            branch: name.to_string(),
-                            commit: match get_commits(repo_name.clone(), 1, Some(name.to_string()), None) {
-                                Some(x) => x.first().cloned(),
-                                None => None
-                            },
-                        }),
-                        None => {}
-                    }
+                    Some(name) => branches.push(Branch {
+                        branch: name.to_string(),
+                        commit: match get_commits(
+                            repo_name.clone(),
+                            1,
+                            Some(name.to_string()),
+                            None,
+                        ) {
+                            Some(x) => x.first().cloned(),
+                            None => None,
+                        },
+                    }),
+                    None => {}
+                },
                 Err(_) => {}
             },
             Err(_) => {}
@@ -31,5 +36,5 @@ pub fn branches(repo_name: String) -> Option<Vec<Branch>> {
 #[derive(Serialize, Clone)]
 pub struct Branch {
     branch: String,
-    commit: Option<Commits>
+    commit: Option<Commits>,
 }

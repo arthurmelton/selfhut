@@ -1,17 +1,16 @@
 use crate::config::CONFIG;
 use crate::git::branches::branches;
 
-
 use crate::git::tag::get_tag;
 use crate::utils::repo_config::repo_config;
 use rocket_dyn_templates::{context, Template};
 
 #[get("/<repo>/refs?<page>", rank = 2)]
 pub fn refs(repo: String, page: Option<usize>) -> Option<Template> {
-    let mut tags = get_tag(repo.clone(), 10, (page.unwrap_or(1)-1)*10, None);
+    let mut tags = get_tag(repo.clone(), 10, (page.unwrap_or(1) - 1) * 10, None);
     let mut pages = 1;
     match tags {
-        Some(ref mut x) => pages = x.1/10+1,
+        Some(ref mut x) => pages = x.1 / 10 + 1,
         None => {}
     }
     Some(Template::render(
