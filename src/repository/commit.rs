@@ -120,14 +120,21 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
 }
 
 #[get("/<repo>/patch/<oid>", rank = 2)]
-pub fn patch(repo: String, oid: String) -> Option<Vec<u8>> {
+pub fn patch(repo: String, oid: String) -> Option<String> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
-    let _repo_clone = repo.clone();
+    let repo_clone = repo.clone();
     let repo = git2::Repository::open(repo_path).ok()?;
     let commit = repo.find_commit(git2::Oid::from_str(&oid).ok()?).ok()?;
-    let _diff = diffs(commit, &repo)?;
-    None
+    let mut data = "".to_string();
+    let diff = diffs(commit, &repo)?;
+    let mut x = 0;
+    for i in diff.deltas() {
+        let mut patch = git2::Patch::from_diff(&diff, x).ok()??;
+        data.push_str(patch.to_buf().ok()?.as_str()?);
+        x+=1;
+    }
+    Some(data)
 }
 
 #[derive(Serialize, Clone)]

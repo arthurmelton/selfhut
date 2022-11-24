@@ -13,7 +13,7 @@ pub fn get_tag(
     let repo = git2::Repository::open(repo_path).ok()?;
     let mut tags = Vec::new();
     let total = repo.tag_names(None).ok()?.len();
-    let mut i = total - 1;
+    let mut i = total;
     let _ = repo.tag_foreach(|x, y| {
         if (name.is_some() && name.as_ref().unwrap().as_bytes() == &y[10..]) || name.is_none() {
             if i >= after && (total < amount + after || i < amount - after) {
