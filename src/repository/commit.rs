@@ -126,15 +126,8 @@ pub fn patch(repo: String, oid: String) -> Option<String> {
     let repo_clone = repo.clone();
     let repo = git2::Repository::open(repo_path).ok()?;
     let commit = repo.find_commit(git2::Oid::from_str(&oid).ok()?).ok()?;
-    let mut data = "".to_string();
     let diff = diffs(commit, &repo)?;
-    let mut x = 0;
-    for i in diff.deltas() {
-        let mut patch = git2::Patch::from_diff(&diff, x).ok()??;
-        data.push_str(patch.to_buf().ok()?.as_str()?);
-        x+=1;
-    }
-    Some(data)
+    None
 }
 
 #[derive(Serialize, Clone)]
