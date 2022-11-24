@@ -17,7 +17,30 @@ pub fn get_commits(
 
     revwalk.set_sorting(git2::Sort::TIME).ok()?;
     match after {
-        Some(id) => revwalk.push(git2::Oid::from_str(id.as_str()).ok()?).ok()?,
+        Some(id) => match git2::Oid::from_str(id.as_str()) {
+            Ok(x) => revwalk.push(x).ok()?,
+            Err(_) => {
+                let oid = match repo.find_branch(&id, git2::BranchType::Local) {
+                    Ok(x) => x.get().target(),
+                    Err(_) => {
+                        let mut tag = None;
+                        let tag_name = id.as_bytes();
+                        repo.tag_foreach(|x,y| {
+                            if &y[10..] == tag_name {
+                                tag = Some(x);
+                                return false;
+                            }
+                            true
+                        });
+                        tag
+                    }
+                };
+                match oid {
+                    Some(x) => revwalk.push(x).ok()?,
+                    None => revwalk.push_head().ok()?
+                }
+            }
+        }
         None => revwalk.push_head().ok()?,
     }
     let mut commits = Vec::new();

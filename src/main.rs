@@ -17,6 +17,7 @@ use crate::repository::log;
 use crate::repository::raw;
 use crate::repository::summary;
 use crate::repository::tree;
+use crate::repository::refs;
 use crate::utils::own_pathbuf::PathBufWithDotfiles;
 use rocket_dyn_templates::Template;
 
@@ -38,7 +39,9 @@ fn rocket() -> _ {
                 log::log,
                 blame::blames,
                 commit::commit,
-                commit::patch
+                commit::patch,
+                refs::refs,
+                refs::refs_id
             ],
         )
         .attach(Template::fairing())

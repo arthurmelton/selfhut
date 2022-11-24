@@ -77,7 +77,7 @@ pub fn tree(repo: String, branch: String, location: PathBufWithDotfiles) -> Opti
                     config: repo_config(repo.clone()),
                     domain: CONFIG.domain.to_string(),
                     active: "tree",
-                    commit: match get_commits(repo.clone(), 1, None, Some(format!("{}", location.get().display()).replace("//", "/"))) {
+                    commit: match get_commits(repo.clone(), 1, Some(branch.clone()), Some(format!("{}", location.get().display()).replace("//", "/"))) {
                         Some(x) => match x.clone().get(0) {
                             Some(x) => Some(x.clone()),
                             None => None
@@ -104,7 +104,7 @@ pub fn tree(repo: String, branch: String, location: PathBufWithDotfiles) -> Opti
                 config: repo_config(repo.clone()),
                 domain: CONFIG.domain.to_string(),
                 active: "tree",
-                commit: match get_commits(repo.clone(), 1, None, Some(format!("{}", location.get().display()).replace("//", "/"))) {
+                commit: match get_commits(repo.clone(), 1, Some(branch.clone()), Some(format!("{}", location.get().display()).replace("//", "/"))) {
                     Some(x) => match x.clone().get(0) {
                         Some(x) => Some(x.clone()),
                         None => None

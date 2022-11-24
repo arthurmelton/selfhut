@@ -58,7 +58,7 @@ pub fn log(
     let commits = get_commits(
         repo.clone(),
         21,
-        from,
+        Some(from.unwrap_or(branch.clone())),
         Some(format!("{}", location.get().display()).replace("//", "/")),
     );
     let last_commit = match commits {
