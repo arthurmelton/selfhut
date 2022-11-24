@@ -1,16 +1,14 @@
 use crate::config::CONFIG;
 use crate::git::get_all::files;
-use tar::{Builder, Header};
 use rocket::response::stream::ByteStream;
-
-
+use tar::{Builder, Header};
 
 #[get("/<repo>/archive/<oid>", rank = 2)]
 pub fn archive(repo: String, oid: String) -> ByteStream![Vec<u8>] {
     ByteStream! {
         let oid = oid[..oid.len()-7].to_string();
         let files = files(repo.clone(), oid.clone(), "".to_string()).unwrap();
-        for i in files { 
+        for i in files {
             match get_tar(repo.clone(), oid.clone(), i) {
                 Some(x) => yield x[..x.len()-1024].to_vec(),
                 None => {},
@@ -31,6 +29,11 @@ fn get_tar(repo: String, oid: String, path: String) -> Option<Vec<u8>> {
     header.set_size(blob.size() as u64);
     header.set_cksum();
     let mut ar = Builder::new(Vec::new());
-    ar.append_data(&mut header, format!("{}/{}", repo_clone, path), blob.content()).unwrap();
+    ar.append_data(
+        &mut header,
+        format!("{}/{}", repo_clone, path),
+        blob.content(),
+    )
+    .unwrap();
     Some(ar.into_inner().ok()?)
 }

@@ -1,10 +1,6 @@
 use crate::config::CONFIG;
 use git2::ObjectType;
 
-
-
-
-
 pub fn files(repo: String, branch: String, path: String) -> Option<Vec<String>> {
     if branch.contains(":") {
         return None;
@@ -21,9 +17,12 @@ pub fn files(repo: String, branch: String, path: String) -> Option<Vec<String>> 
             for entry in tree.iter() {
                 if entry.kind() == Some(ObjectType::Blob) {
                     returns.push(format!("{}{}", path, entry.name()?));
-                }
-                else {
-                    for i in files(repo_clone.clone(), branch.clone(), format!("{}{}/", path, entry.name()?))? {
+                } else {
+                    for i in files(
+                        repo_clone.clone(),
+                        branch.clone(),
+                        format!("{}{}/", path, entry.name()?),
+                    )? {
                         returns.push(i);
                     }
                 }
