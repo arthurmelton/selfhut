@@ -6,6 +6,25 @@ Drew DeVault at [https://sourcehut.org/pricing/](https://sourcehut.org/pricing/)
 If you are going to run this yourself. I really recommend supporting Drew DeVault
 because without him this would not exist!
 
+## Install
+
+To install you will need:
+
+- git
+- rust
+- libgit2
+
+Once you have these just run these steps.
+
+```sh
+git clone https://git.arthurmelton.com/git.arthurmelton.com
+cd git.arthurmelton.com
+cargo build --release
+```
+
+The binary executable will be at `./target/release/git`, you can just run this
+and your server should stort working!
+
 ## Hosting
 
 Simpily run the binary and a website is going to be hosted at port 8000. I would
