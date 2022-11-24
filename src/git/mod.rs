@@ -6,3 +6,4 @@ pub mod file;
 pub mod main_branch;
 pub mod repos;
 pub mod tag;
+pub mod get_all;

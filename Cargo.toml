@@ -19,5 +19,6 @@ rocket_dyn_templates = {version = "0.1.0-rc.2", features=["handlebars"]}
 serde = "1.0.145"
 serde_derive = "1.0.145"
 syntect = "5.0.0"
+tar = "0.4.38"
 toml = "0.5.9"
 unix_mode = "0.1.3"

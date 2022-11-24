@@ -5,3 +5,4 @@ pub mod raw;
 pub mod refs;
 pub mod summary;
 pub mod tree;
+pub mod archive;
