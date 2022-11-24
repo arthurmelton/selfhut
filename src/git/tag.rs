@@ -9,7 +9,7 @@ pub fn get_tag(repo_name: String, amount: usize, after: usize, name: Option<Stri
     let mut tags = Vec::new();
     let total = repo.tag_names(None).ok()?.len();
     let mut i = total-1;
-    repo.tag_foreach(|x,y| {
+    let _ = repo.tag_foreach(|x,y| {
         if (name.is_some() && name.as_ref().unwrap().as_bytes() == &y[10..]) || name.is_none() {
             if i >= after && (total < amount + after ||  i < amount - after) {
                 match get_commits(repo_name.clone(), 1, Some(x.to_string()), None) {

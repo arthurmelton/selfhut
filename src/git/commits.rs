@@ -25,7 +25,7 @@ pub fn get_commits(
                     Err(_) => {
                         let mut tag = None;
                         let tag_name = id.as_bytes();
-                        repo.tag_foreach(|x,y| {
+                        let _ = repo.tag_foreach(|x,y| {
                             if &y[10..] == tag_name {
                                 tag = Some(x);
                                 return false;
