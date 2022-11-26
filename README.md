@@ -1,7 +1,7 @@
 # [Selfhut](https://git.arthurmelton.com)
 
-This is my git site, it took insperation from [Sourcehut](https://sourcehut.org/).
-Its not a fork but its practecly a remake, just for my use case. Please support
+This is my git site, it took inspiration from [Sourcehut](https://sourcehut.org/).
+Its not a fork but its practically a remake, just for my use case. Please support
 Drew DeVault at [https://sourcehut.org/pricing/](https://sourcehut.org/pricing/).
 If you are going to run this yourself. I really recommend supporting Drew DeVault
 because without him this would not exist!
@@ -23,12 +23,12 @@ cargo build --release
 ```
 
 The binary executable will be at `./target/release/selfhut`, you can just run this
-and your server should stort working!
+and your server should start working!
 
 ## Hosting
 
-Simpily run the binary and a website is going to be hosted at port 8000. I would
-also recoment using something like nginx to change the port and to do caching. If 
+Simply run the binary and a website is going to be hosted at port 8000. I would
+also recommend using something like nginx to change the port and to do caching. If 
 you want to change the config (this would make sense because at default it only
 has a example user), edit the file in `$(XDG_CONFIG_HOME)/selfhut/selfhut.toml`
 to your liking. To add a `favicon.ico` you need to add it to 
@@ -36,7 +36,7 @@ to your liking. To add a `favicon.ico` you need to add it to
 
 ## Config
 
-This would be a server config that has every atibue set.
+This would be a server config that has every attribute set.
 ```toml
 name = "Billy Bob Jr"
 description = "I am supper cool and think that [This](https://exmaple.com) is really cool!"
@@ -53,7 +53,7 @@ port = 993
 ## Repo Config
 
 A repo config is a file called `repo.toml` in the `HEAD` of your git repo. This
-controlls some things like like the repo description and website. A example
+controls some things like like the repo description and website. A example
 would be this.
 ```toml
 description="A really cool program I made"
