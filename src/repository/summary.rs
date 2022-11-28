@@ -19,6 +19,7 @@ pub fn repository(repo: String) -> Option<Template> {
             repo: repo.clone(),
             config: repo_config(repo.clone()),
             domain: CONFIG.domain.to_string(),
+            user: CONFIG.name.to_string(),
             readme: md_to_html(&file.1?),
             active: "summary",
             preview: get_commits(repo.clone(), 3, None, None),

@@ -27,6 +27,7 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
             repo: repo_clone.clone(),
             config: repo_config(repo_clone.clone()),
             domain: CONFIG.domain.to_string(),
+            user: CONFIG.name.to_string(),
             active: "log",
             payment: CONFIG.payment_link.clone(),
             mailing_list: CONFIG.mailing_list.clone(),

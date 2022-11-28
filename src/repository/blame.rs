@@ -50,6 +50,7 @@ pub fn blames(repo: String, branch: String, location: PathBufWithDotfiles) -> Op
             repo: repo.clone(),
             config: repo_config(repo.clone()),
             domain: CONFIG.domain.to_string(),
+            user: CONFIG.name.to_string(),
             active: "tree",
             commit: match get_commits(repo.clone(), 1, Some(branch.clone()), Some(format!("{}", location.get().display()).replace("//", "/"))) {
                 Some(x) => match x.clone().get(0) {

@@ -20,6 +20,7 @@ pub fn refs(repo: String, page: Option<usize>) -> Option<Template> {
             repo: repo.clone(),
             config: repo_config(repo.clone()),
             domain: CONFIG.domain.to_string(),
+            user: CONFIG.name.to_string(),
             active: "refs",
             current_dir_file: "/",
             current_dir: "/",
