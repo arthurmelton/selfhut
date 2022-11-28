@@ -60,6 +60,12 @@ description="A really cool program I made"
 website="https://cool-program.com"
 ```
 
+## Setup git
+
+You can do all the things in this to get fully setup. You will need to use ssh 
+git to make commits. You will need to run the `update-server-info` that is below
+after you do the `git init`. [https://landchad.net/git](https://landchad.net/git)
+
 ## Making a new git
 
 To make a new git repo you need to run 
@@ -74,6 +80,10 @@ path `hooks/post-update` and set its contents to
 exec git update-server-info
 ```
 This should create the git and make it so that people can actually clone it!
+
+## How to edit a repo
+
+The way that you are going to edit a repo you own is through ssh.
 
 ## Email
 
