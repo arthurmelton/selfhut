@@ -17,19 +17,17 @@ pub fn get_tag(
     let _ = repo.tag_foreach(|x, y| {
         if (name.is_some() && name.as_ref().unwrap().as_bytes() == &y[10..]) || name.is_none() {
             if i >= after && (total < amount + after || i < amount - after) {
-                match get_commits(repo_name.clone(), 1, Some(x.to_string()), None) {
-                    Some(z) => match z.first() {
-                        Some(z) => tags.push(Tags {
+                if let Some(z) = get_commits(repo_name.clone(), 1, Some(x.to_string()), None) {
+                    if let Some(z) = z.first() {
+                        tags.push(Tags {
                             commit: z.clone(),
                             body: match repo.find_tag(x) {
                                 Ok(x) => x.message().unwrap_or("").to_string(),
                                 Err(_) => "".to_string(),
                             },
                             name: std::str::from_utf8(&y[10..]).unwrap_or("").to_string(),
-                        }),
-                        None => {}
-                    },
-                    None => {}
+                        })
+                    }
                 }
             }
             if i < after + 1 {

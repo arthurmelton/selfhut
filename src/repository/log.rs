@@ -32,14 +32,14 @@ pub fn log_main(repo: String, from: Option<String>) -> Option<Template> {
     Some(Template::render(
         "repository/log",
         context! {
-            title: format!("/ :: {}", repo.clone()),
+            title: format!("/ :: {}", repo),
             repo: repo.clone(),
-            config: repo_config(repo.clone()),
+            config: repo_config(repo),
             domain: CONFIG.domain.to_string(),
             user: CONFIG.name.to_string(),
             active: "log",
             commits,
-            branch: main_branch.clone(),
+            branch: main_branch,
             current_dir_file: "/",
             current_dir: "/",
             payment: CONFIG.payment_link.clone(),
@@ -59,7 +59,7 @@ pub fn log(
     let commits = get_commits(
         repo.clone(),
         21,
-        Some(from.unwrap_or(branch.clone())),
+        Some(from.unwrap_or_else(|| branch.clone())),
         Some(format!("{}", location.get().display()).replace("//", "/")),
     );
     let last_commit = match commits {
@@ -84,14 +84,14 @@ pub fn log(
     Some(Template::render(
         "repository/log",
         context! {
-            title: format!("/{} :: {}", location.get().display(), repo.clone()),
+            title: format!("/{} :: {}", location.get().display(), repo),
             repo: repo.clone(),
-            config: repo_config(repo.clone()),
+            config: repo_config(repo),
             domain: CONFIG.domain.to_string(),
             user: CONFIG.name.to_string(),
             active: "log",
             commits,
-            branch: branch.clone(),
+            branch,
             current_dir_file: format!("/{}/", location.get().display()).replace("//", "/"),
             current_dir: format!("/{}", location.get().display()),
             payment: CONFIG.payment_link.clone(),

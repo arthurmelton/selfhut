@@ -15,13 +15,13 @@ pub fn index(page: Option<usize>, search: Option<String>) -> Option<Template> {
         repos = repos
             .iter()
             .filter(|repo| {
-                repo.name.contains(&*search.as_ref().unwrap())
-                    || repo.description.contains(&*search.as_ref().unwrap())
+                repo.name.contains(search.as_ref().unwrap())
+                    || repo.description.contains(search.as_ref().unwrap())
             })
             .map(|repo| repo.clone())
             .collect::<Vec<Repo>>();
     }
-    let total_page = if repos.len() > 0 {
+    let total_page = if !repos.is_empty() {
         (repos.len() - 1) / PAGE_REPO_COUNT + 1
     } else {
         1
@@ -38,7 +38,7 @@ pub fn index(page: Option<usize>, search: Option<String>) -> Option<Template> {
             user: CONFIG.name.clone(),
             description: md_to_html(&CONFIG.description.clone()),
             repos: repos[(page-1)*PAGE_REPO_COUNT..last_item].to_vec(),
-            search: search.unwrap_or("".to_string()),
+            search: search.unwrap_or_default(),
             page,
             total_page,
             page_inc: page+1,

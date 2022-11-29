@@ -1,3 +1,4 @@
+#![allow(clippy::map_clone)] 
 #[macro_use]
 extern crate rocket;
 mod clone;

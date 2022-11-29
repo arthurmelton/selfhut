@@ -6,7 +6,7 @@ use serde_derive::Serialize;
 use std::path::PathBuf;
 
 pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
-    if branch.contains(":") {
+    if branch.contains(':') {
         return None;
     }
     let mut repo_path = CONFIG.git_location.clone();
@@ -44,7 +44,7 @@ pub fn files(repo: String, branch: String, path: String) -> Option<Vec<File>> {
 }
 
 pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<String>, Vec<u8>)> {
-    if branch.contains(":") {
+    if branch.contains(':') {
         return None;
     }
     let mut repo_path = CONFIG.git_location.clone();
@@ -75,9 +75,7 @@ pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<
             };
             return Some((file, content, blob.content().iter().map(|x| *x).collect()));
         }
-        _ => {
-            return None;
-        }
+        _ => None
     }
 }
 
@@ -91,6 +89,7 @@ pub struct File {
 }
 
 #[derive(Serialize)]
+#[allow(non_camel_case_types)]
 pub enum FileType {
     blob,
     tree,

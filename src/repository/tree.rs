@@ -19,17 +19,14 @@ pub fn tree_main(repo: String) -> Option<Template> {
     Some(Template::render(
         "repository/tree",
         context! {
-            title: format!("/ :: {}", repo.clone()),
+            title: format!("/ :: {}", repo),
             repo: repo.clone(),
             config: repo_config(repo.clone()),
             domain: CONFIG.domain.to_string(),
             user: CONFIG.name.to_string(),
             active: "tree",
             commit: match get_commits(repo.clone(), 1, None, None) {
-                Some(x) => match x.get(0) {
-                    Some(x) => Some(x.clone()),
-                    None => None
-                }
+                Some(x) => x.get(0).map(|x| x.clone()),
                 None => None
             },
             branch: main_branch.clone(),
@@ -73,20 +70,17 @@ pub fn tree(repo: String, branch: String, location: PathBufWithDotfiles) -> Opti
             Some(Template::render(
                 "repository/file",
                 context! {
-                    title: format!("/{} :: {}", location.get().display(), repo.clone()),
+                    title: format!("/{} :: {}", location.get().display(), repo),
                     repo: repo.clone(),
                     config: repo_config(repo.clone()),
                     domain: CONFIG.domain.to_string(),
                     user: CONFIG.name.to_string(),
                     active: "tree",
-                    commit: match get_commits(repo.clone(), 1, Some(branch.clone()), Some(format!("{}", location.get().display()).replace("//", "/"))) {
-                        Some(x) => match x.clone().get(0) {
-                            Some(x) => Some(x.clone()),
-                            None => None
-                        }
+                    commit: match get_commits(repo, 1, Some(branch.clone()), Some(format!("{}", location.get().display()).replace("//", "/"))) {
+                        Some(x) => x.get(0).map(|x| x.clone()),
                         None => None
                     },
-                    branch: branch.clone(),
+                    branch,
                     files: file,
                     current_dir_file: format!("/{}/", location.get().display()).replace("//", "/"),
                     current_dir: format!("/{}", location.get().display()),
@@ -101,17 +95,14 @@ pub fn tree(repo: String, branch: String, location: PathBufWithDotfiles) -> Opti
         None => Some(Template::render(
             "repository/tree",
             context! {
-                title: format!("/{} :: {}", location.get().display(), repo.clone()),
+                title: format!("/{} :: {}", location.get().display(), repo),
                 repo: repo.clone(),
                 config: repo_config(repo.clone()),
                 domain: CONFIG.domain.to_string(),
                 user: CONFIG.name.to_string(),
                 active: "tree",
                 commit: match get_commits(repo.clone(), 1, Some(branch.clone()), Some(format!("{}", location.get().display()).replace("//", "/"))) {
-                    Some(x) => match x.clone().get(0) {
-                        Some(x) => Some(x.clone()),
-                        None => None
-                    }
+                    Some(x) => x.get(0).map(|x| x.clone()),
                     None => None
                 },
                 branch: branch.clone(),

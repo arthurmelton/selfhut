@@ -18,7 +18,7 @@ lazy_static! {
                 name: "Example User".to_string(),
                 description: "This is billy and he loves his [website](https://example.com)!!!"
                     .to_string(),
-                git_location: dirs::home_dir().unwrap_or(PathBuf::from("/")),
+                git_location: dirs::home_dir().unwrap_or_else(|| PathBuf::from("/")),
                 domain: "127.0.0.1".to_string(),
                 payment_link: None,
                 mailing_list: None,

@@ -6,24 +6,22 @@ use std::fs;
 pub fn get_repos() -> Option<Vec<Repo>> {
     let home = CONFIG.git_location.clone();
     Some(sort_modified(
-        fs::read_dir(home.clone())
+        fs::read_dir(home)
             .ok()?
-            .filter(|path| path.is_ok())
-            .map(|path| path.unwrap())
+            .filter_map(|path| path.ok())
             .filter(|path| path.file_type().is_ok())
             .filter(|path| path.file_type().unwrap().is_dir())
             .filter(|path| path.metadata().is_ok())
             .filter(|path| path.metadata().unwrap().modified().is_ok())
             .map(|path| path.file_name().into_string())
-            .filter(|path| path.is_ok())
-            .map(|path| path.unwrap())
-            .filter(|path| !path.starts_with("."))
+            .filter_map(|path| path.ok())
+            .filter(|path| !path.starts_with('.'))
             .filter(|path| path.ends_with(".git"))
             .map(|path| {
                 let name = path[0..path.len() - 4].to_string();
                 Repo {
                     name: name.clone(),
-                    description: repo_config(name).description.unwrap_or("".to_string()),
+                    description: repo_config(name).description.unwrap_or_default(),
                 }
             })
             .collect::<Vec<Repo>>(),
@@ -36,8 +34,7 @@ pub struct Repo {
     pub description: String,
 }
 
-fn sort_modified(repos: Vec<Repo>) -> Vec<Repo> {
-    let mut repos = repos.clone();
+fn sort_modified(mut repos: Vec<Repo>) -> Vec<Repo> {
     let home = CONFIG.git_location.clone();
     repos.sort_by(|a, b| {
         let mut a_loc = home.clone();

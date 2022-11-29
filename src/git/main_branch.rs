@@ -4,6 +4,7 @@ pub fn main_branch(repo_name: String) -> Option<String> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo_name));
     let repo = git2::Repository::open(repo_path).ok()?;
+    #[allow(clippy::let_and_return)]
     let x = Some(
         repo.branches(Some(git2::BranchType::Local))
             .ok()?

@@ -15,7 +15,7 @@ use rocket_dyn_templates::{context, Template};
 pub fn commit(repo: String, oid: String) -> Option<Template> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
-    let repo_clone = repo.clone();
+    let repo_clone = repo;
     let repo = git2::Repository::open(repo_path).ok()?;
     let commit = repo.find_commit(git2::Oid::from_str(&oid).ok()?).ok()?;
     let diff = diffs(commit.clone(), &repo)?;
@@ -23,7 +23,7 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
     Some(Template::render(
         "repository/commit",
         context! {
-            title: format!("{} :: {}", oid, repo_clone.clone()),
+            title: format!("{} :: {}", oid, repo_clone),
             repo: repo_clone.clone(),
             config: repo_config(repo_clone.clone()),
             domain: CONFIG.domain.to_string(),
@@ -31,20 +31,14 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
             active: "log",
             payment: CONFIG.payment_link.clone(),
             mailing_list: CONFIG.mailing_list.clone(),
-            commit: match get_commits(repo_clone.clone(), 1, Some(oid.clone()), None) {
-                Some(x) => match x.clone().get(0) {
-                    Some(x) => Some(x.clone()),
-                    None => None
-                }
+            commit: match get_commits(repo_clone.clone(), 1, Some(oid), None) {
+                Some(x) => x.get(0).map(|x| x.clone()),
                 None => None
             },
             parent: match commit.parent_id(0) {
                 Ok(parent) => {
-                    match get_commits(repo_clone.clone(), 1, Some(parent.to_string()), None) {
-                        Some(x) => match x.first() {
-                            Some(x) => Some(x.clone()),
-                            None => None
-                        },
+                    match get_commits(repo_clone, 1, Some(parent.to_string()), None) {
+                        Some(x) => x.first().map(|x| x.clone()),
                         None => None
                     }
                 },
@@ -55,8 +49,7 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
             deletions: stats.deletions(),
             files: {
                 let mut items = Vec::new();
-                let mut x = 0;
-                for i in diff.deltas() {
+                for (x, i) in diff.deltas().enumerate() {
                     let patch = git2::Patch::from_diff(&diff, x).ok()??;
                     let hunk_n = patch.num_hunks();
                     let mut hunks = Vec::new();
@@ -112,7 +105,6 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
                         deletions: patch.line_stats().ok()?.2,
                         hunks
                     });
-                    x+=1;
                 }
                 items
             },
@@ -124,7 +116,7 @@ pub fn commit(repo: String, oid: String) -> Option<Template> {
 pub fn patch(repo: String, oid: String) -> Option<String> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
-    let _repo_clone = repo.clone();
+    let _repo_clone = repo;
     let repo = git2::Repository::open(repo_path).ok()?;
     let commit = repo.find_commit(git2::Oid::from_str(&oid).ok()?).ok()?;
     let _diff = diffs(commit, &repo)?;

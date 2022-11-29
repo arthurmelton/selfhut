@@ -7,27 +7,20 @@ pub fn branches(repo_name: String) -> Option<Vec<Branch>> {
     repo_path.push(format!("{}.git", repo_name));
     let repo = git2::Repository::open(repo_path).ok()?;
     let mut branches = Vec::new();
-    for i in repo.branches(Some(git2::BranchType::Local)).ok()? {
-        match i {
-            Ok(x) => match x.0.name() {
-                Ok(name) => match name {
-                    Some(name) => branches.push(Branch {
-                        branch: name.to_string(),
-                        commit: match get_commits(
-                            repo_name.clone(),
-                            1,
-                            Some(name.to_string()),
-                            None,
-                        ) {
-                            Some(x) => x.first().cloned(),
-                            None => None,
-                        },
-                    }),
-                    None => {}
+    for i in (repo.branches(Some(git2::BranchType::Local)).ok()?).flatten() {
+        if let Ok(Some(name)) = i.0.name() {
+            branches.push(Branch {
+                branch: name.to_string(),
+                commit: match get_commits(
+                    repo_name.clone(),
+                    1,
+                    Some(name.to_string()),
+                    None,
+                ) {
+                    Some(x) => x.first().cloned(),
+                    None => None,
                 },
-                Err(_) => {}
-            },
-            Err(_) => {}
+            })
         }
     }
     Some(branches)

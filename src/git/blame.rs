@@ -4,13 +4,13 @@ use serde_derive::Serialize;
 
 use std::path::Path;
 
-pub fn blame<'a>(repo: String, branch: String, path: String) -> Option<Vec<Blame>> {
-    if branch.contains(":") {
+pub fn blame(repo: String, branch: String, path: String) -> Option<Vec<Blame>> {
+    if branch.contains(':') {
         return None;
     }
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
-    let repo_clone = repo.clone();
+    let repo_clone = repo;
     let repo = git2::Repository::open(repo_path).ok()?;
     let blame = repo.blame_file(Path::new(&path), None).ok()?;
     let mut blames = Vec::new();

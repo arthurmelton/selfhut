@@ -49,55 +49,49 @@ pub fn get_commits(
     while i < ammount && commit.is_some() && commit.as_ref().unwrap().is_ok() {
         let commit_rev = commit.unwrap().unwrap();
         let repo_commit = repo.find_commit(commit_rev);
-        match repo_commit {
-            Ok(repo_commit) => {
-                let mut allowed = true;
-                if path.is_some() {
-                    let path_value = path.as_ref().unwrap();
-                    match diffs(repo_commit.clone(), &repo) {
-                        Some(diff) => {
-                            let files = diff
-                                .deltas()
-                                .map(|i| i.new_file().path())
-                                .filter(|i| i.is_some())
-                                .map(|i| i.unwrap().to_string_lossy())
-                                .filter(|i| i.starts_with(path_value))
-                                .count();
-                            allowed = files > 0;
-                        }
-                        None => {}
-                    }
-                }
-                if allowed {
-                    let time =
-                        Duration::seconds(repo_commit.time().seconds() - Utc::now().timestamp());
-                    commits.push(Commits {
-                        commit_hash: commit_rev.to_string(),
-                        commit: repo_commit.message().unwrap_or("").to_string(),
-                        commitie: repo_commit
-                            .committer()
-                            .name()
-                            .unwrap_or("Unknown")
-                            .to_string(),
-                        commit_hash_short: commit_rev.to_string()[..8].to_string(),
-                        time_utc: {
-                            let date = chrono::naive::NaiveDateTime::from_timestamp(
-                                Utc::now().timestamp() + time.num_seconds(),
-                                0,
-                            );
-                            format!(
-                                "{} {} UTC",
-                                date.date().format("%Y-%m-%d"),
-                                date.time().format("%H:%M:%S")
-                            )
-                        },
-                        time_relitive: HumanTime::from(time).to_string(),
-                        commit_body: repo_commit.body().unwrap_or("").to_string(),
-                    });
-                    i += 1;
+        if let Ok(repo_commit) = repo_commit {
+            let mut allowed = true;
+            if path.is_some() {
+                let path_value = path.as_ref().unwrap();
+                if let Some(diff) = diffs(repo_commit.clone(), &repo) {
+                    let files = diff
+                        .deltas()
+                        .map(|i| i.new_file().path())
+                        .filter(|i| i.is_some())
+                        .map(|i| i.unwrap().to_string_lossy())
+                        .filter(|i| i.starts_with(path_value))
+                        .count();
+                    allowed = files > 0;
                 }
             }
-            Err(_) => {}
+            if allowed {
+                let time =
+                    Duration::seconds(repo_commit.time().seconds() - Utc::now().timestamp());
+                commits.push(Commits {
+                    commit_hash: commit_rev.to_string(),
+                    commit: repo_commit.message().unwrap_or("").to_string(),
+                    commitie: repo_commit
+                        .committer()
+                        .name()
+                        .unwrap_or("Unknown")
+                        .to_string(),
+                    commit_hash_short: commit_rev.to_string()[..8].to_string(),
+                    time_utc: {
+                        let date = chrono::naive::NaiveDateTime::from_timestamp(
+                            Utc::now().timestamp() + time.num_seconds(),
+                            0,
+                        );
+                        format!(
+                            "{} {} UTC",
+                            date.date().format("%Y-%m-%d"),
+                            date.time().format("%H:%M:%S")
+                        )
+                    },
+                    time_relitive: HumanTime::from(time).to_string(),
+                    commit_body: repo_commit.body().unwrap_or("").to_string(),
+                });
+                i += 1;
+            }
         }
         commit = revwalk.next();
     }

@@ -21,7 +21,7 @@ pub fn archive(repo: String, oid: String) -> ByteStream![Vec<u8>] {
 fn get_tar(repo: String, oid: String, path: String) -> Option<Vec<u8>> {
     let mut repo_path = CONFIG.git_location.clone();
     repo_path.push(format!("{}.git", repo));
-    let repo_clone = repo.clone();
+    let repo_clone = repo;
     let repo = git2::Repository::open(repo_path).unwrap();
     let obj = repo.revparse_single(&format!("{}:{}", oid, path)).ok()?;
     let blob = obj.as_blob()?;
@@ -35,5 +35,5 @@ fn get_tar(repo: String, oid: String, path: String) -> Option<Vec<u8>> {
         blob.content(),
     )
     .unwrap();
-    Some(ar.into_inner().ok()?)
+    ar.into_inner().ok()
 }

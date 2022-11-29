@@ -24,11 +24,8 @@ pub fn repository(repo: String) -> Option<Template> {
             active: "summary",
             preview: get_commits(repo.clone(), 3, None, None),
             main_branch,
-            tag: match get_tag(repo.clone(), 1, 0, None) {
-                Some(x) => match x.0.get(0) {
-                    Some(x) => Some(x.clone()),
-                    None => None
-                },
+            tag: match get_tag(repo, 1, 0, None) {
+                Some(x) => x.0.get(0).map(|x| x.clone()),
                 None => None
             },
             payment: CONFIG.payment_link.clone(),
