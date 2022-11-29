@@ -43,7 +43,7 @@
                     <div class="event diff">
                     <pre>
 {{#each hunks}}
-<strong class="text-info">@@ {{#if ../../parent}}<a href="/{{../../repo}}/tree/{{../../parent.commit_hash}}/{{this.end_path}}#L{{this.first}}" style="text-decoration: underline">{{/if}}{{this.first}}{{#if ../../parent}}</a>{{/if}},{{this.second}} <a href="/{{../../repo}}/tree/{{../../commit.commit_hash}}/{{this.end_path}}#L{{this.third}}" style="text-decoration: underline">{{this.third}}</a>,{{this.fourth}} @@{{this.first_line}}</strong>
+<strong class="text-info">@@ {{#if ../../parent}}<a href="/{{../../repo}}/tree/{{../../parent.commit_hash}}/{{../this.end_path}}#L{{this.first}}" style="text-decoration: underline">{{/if}}{{this.first}}{{#if ../../parent}}</a>{{/if}},{{this.second}} <a href="/{{../../repo}}/tree/{{../../commit.commit_hash}}/{{../this.end_path}}#L{{this.third}}" style="text-decoration: underline">{{this.third}}</a>,{{this.fourth}} @@{{this.first_line}}</strong>
 {{#each lines}}</span><span class="{{this.class}}"><a aria-hidden="true" class="lineno" href="#{{../../this.end_path}}-{{../this.hunk_n}}-{{this.line_n}}" id="{{../../this.end_path}}-{{../this.hunk_n}}-{{this.line_n}}" style="color: inherit">{{this.types}}</a>{{this.line}}</span>{{/each}}
 {{/each}}
 </pre>
