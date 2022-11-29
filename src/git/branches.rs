@@ -11,12 +11,7 @@ pub fn branches(repo_name: String) -> Option<Vec<Branch>> {
         if let Ok(Some(name)) = i.0.name() {
             branches.push(Branch {
                 branch: name.to_string(),
-                commit: match get_commits(
-                    repo_name.clone(),
-                    1,
-                    Some(name.to_string()),
-                    None,
-                ) {
+                commit: match get_commits(repo_name.clone(), 1, Some(name.to_string()), None) {
                     Some(x) => x.first().cloned(),
                     None => None,
                 },

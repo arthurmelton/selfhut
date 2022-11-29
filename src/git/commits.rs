@@ -65,8 +65,7 @@ pub fn get_commits(
                 }
             }
             if allowed {
-                let time =
-                    Duration::seconds(repo_commit.time().seconds() - Utc::now().timestamp());
+                let time = Duration::seconds(repo_commit.time().seconds() - Utc::now().timestamp());
                 commits.push(Commits {
                     commit_hash: commit_rev.to_string(),
                     commit: repo_commit.message().unwrap_or("").to_string(),

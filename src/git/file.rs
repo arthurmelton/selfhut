@@ -75,7 +75,7 @@ pub fn file(repo: String, branch: String, path: String) -> Option<(File, Option<
             };
             return Some((file, content, blob.content().iter().map(|x| *x).collect()));
         }
-        _ => None
+        _ => None,
     }
 }
 

@@ -9,7 +9,9 @@ use rocket_dyn_templates::{context, Template};
 pub fn refs(repo: String, page: Option<usize>) -> Option<Template> {
     let mut tags = get_tag(repo.clone(), 10, (page.unwrap_or(1) - 1) * 10, None);
     let mut pages = 1;
-    if let Some(ref mut x) = tags { pages = x.1 / 10 + 1 }
+    if let Some(ref mut x) = tags {
+        pages = x.1 / 10 + 1
+    }
     Some(Template::render(
         "repository/refs",
         context! {
