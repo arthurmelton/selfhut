@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /*?*
-Disallow: /*.tar.gz$
-Disallow: /*/*/blame/*
-Disallow: /*/*/log/*
